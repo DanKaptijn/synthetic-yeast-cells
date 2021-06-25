@@ -78,8 +78,6 @@ def random_cells(n, size=(512, 512),
 
     def randint_range(a, b, dtype=numpy.int):
         return (a + numpy.random.rand(n) * (b - a)).astype(dtype)
-    
-    print("Hello it's me!!")
 
     d = min_distance_boundary
     r0 = randint_range(*r0_range)
