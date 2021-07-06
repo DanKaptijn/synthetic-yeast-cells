@@ -109,9 +109,8 @@ def create_background(cores,
     cores = (cores > 0)
     a, b, z = background_contrast, core_contrast, background_intensity
     background = numpy.clip(z + (a + (b-a) * cores) * background, 0, 1)
-    print("Variable a = ", a)
-    print("Variable b = ", b)
-    print("Variable z = ", z)
+    print("cores = ", cores)
+    print("background = ", background)
     return background
 
 
