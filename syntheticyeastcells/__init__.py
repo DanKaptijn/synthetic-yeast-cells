@@ -3,6 +3,7 @@ import numpy
 import cv2
 from imgaug import augmenters as iaa
 from matplotlib import pyplot
+from math import e
 
 
 
@@ -107,7 +108,7 @@ def create_background(cores,
     background /= background.std()
     cores = (cores > 0)
     a, b, z = background_contrast, core_contrast, background_intensity
-    background = numpy.clip(z + (a + (b-a) * cores) * background, 0, 1)
+    background = numpy.clip(1/ (1 + e**-(z + (a + (b-a) * cores) * background) ), 0, 1)
 #     print("background = ", background)
     return background
 
