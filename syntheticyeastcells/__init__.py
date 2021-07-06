@@ -4,7 +4,6 @@ import cv2
 from imgaug import augmenters as iaa
 from matplotlib import pyplot
 
-print("Hello World")
 
 
 def pillar_adder(size=(512, 512), pillars=[
@@ -109,8 +108,8 @@ def create_background(cores,
     cores = (cores > 0)
     a, b, z = background_contrast, core_contrast, background_intensity
     background = numpy.clip(z + (a + (b-a) * cores) * background, 0, 1)
-    print("cores = ", cores)
-    print("background = ", background)
+    print([i for i in cores])
+#     print("background = ", background)
     return background
 
 
