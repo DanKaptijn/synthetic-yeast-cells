@@ -57,6 +57,8 @@ def process_batch(destination, set_name, start, end,
                   background_contrast=0.00188,
                   core_contrast=0.0752,
                   p_white_outside=0.5,
+                  k=1,
+                  x0=0
                  ):
     os.makedirs(f'{destination}/{set_name}/', exist_ok=True)
     left = [
@@ -76,7 +78,9 @@ def process_batch(destination, set_name, start, end,
        background_intensity=background_intensity,
        background_contrast=background_contrast,
        core_contrast=core_contrast,
-       p_white_outside=p_white_outside)
+       p_white_outside=p_white_outside,
+       k=k,
+       x0=x0)
 
     data = []
     for (i, filename), label, image in zip(left, labels, images):
@@ -99,6 +103,7 @@ def create_dataset(destination,
                    background_contrast=0.00188,
                    core_contrast=0.0752,
                    p_white_outside=0.5,
+                   k=1, x0=0,
                    njobs=40, batch_size=10,
                    progressbar=True):
     kwargs = {
