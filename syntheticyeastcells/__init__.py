@@ -197,6 +197,9 @@ def create_samples(n_images, n_cells_per_image=100,
     # images -= images.min()
     # images /= images.max()
     images = (255 * images[..., None]).repeat(3, -1).astype(numpy.uint8)
+    
+    print(images)
+    print(labels)
 
     return images, labels
 
