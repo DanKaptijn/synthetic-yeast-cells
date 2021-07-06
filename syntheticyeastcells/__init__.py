@@ -4,6 +4,8 @@ import cv2
 from imgaug import augmenters as iaa
 from matplotlib import pyplot
 
+print("Hello World")
+
 
 def pillar_adder(size=(512, 512), pillars=[
     (slice(50, 300), slice(50, 200)),
@@ -91,7 +93,6 @@ def random_cells(n, size=(512, 512),
         'white-outside': numpy.random.rand(n) < p_white_outside
     })
 
-print("Hello World")
 def create_background(cores,
                       spatial_blur_std=1.5,
                       background_intensity=0.4,
