@@ -116,7 +116,9 @@ def create_dataset(destination,
         'background_intensity': background_intensity,
         'background_contrast': background_contrast,
         'core_contrast': core_contrast,
-        'p_white_outside': p_white_outside}
+        'p_white_outside': p_white_outside,
+        'k': k,
+        'x0': x0}
     progressbar = tqdm if progressbar else (lambda x: x)
 
     results = dict()
