@@ -98,6 +98,8 @@ def create_background(cores,
                       background_intensity=0.4,
                       background_contrast=0.00188,
                       core_contrast=0.0282,
+                      k=1,
+                      x0=0,
                       ):
     """Creates a noisy, blurred background with different intensities
     for where there are cell and where there is nothing"""
@@ -108,7 +110,7 @@ def create_background(cores,
     background /= background.std()
     cores = (cores > 0)
     a, b, z = background_contrast, core_contrast, background_intensity
-    background = numpy.clip(1/ (1 + e**-(z + (a + (b-a) * cores) * background) ), 0, 1)
+    background = numpy.clip(1/ (1 + e**-k*((z + (a + (b-a) * cores) * background)-x0) ), 0, 1)
 #     print("background = ", background)
     return background
 
@@ -118,6 +120,8 @@ def create_sample(size, cells,
                   background_intensity=0.4,
                   background_contrast=0.01,
                   core_contrast=0.15,
+                  k=1,
+                  x0=0,
                   augmenter=seperate_augmentations,
                   ):
     """Create an image with cells as defined in `cells`"""
@@ -146,7 +150,9 @@ def create_sample(size, cells,
                                    spatial_blur_std=spatial_blur_std,
                                    background_intensity=background_intensity,
                                    background_contrast=background_contrast,
-                                   core_contrast=core_contrast)
+                                   core_contrast=core_contrast,
+                                   k=k,
+                                   x0=x0)
 
     for im in [inner, outer]:
         im[:] = im - cv2.erode(im, numpy.ones((3, 3)))
@@ -168,6 +174,8 @@ def create_samples(n_images, n_cells_per_image=100,
                    background_contrast=0.00188,
                    core_contrast=0.0752,
                    p_white_outside=1.0,
+                   k=1,
+                   x0=0
                   ):
     """Creates `n` `sz` x `sz` synthetic images of out of focus cells, 
     with m cells in each one. Then for each of the `n` images, `r` repetitions
@@ -190,7 +198,9 @@ def create_samples(n_images, n_cells_per_image=100,
             spatial_blur_std=spatial_blur_std,
             background_intensity=background_intensity,
             background_contrast=background_contrast,
-            core_contrast=core_contrast
+            core_contrast=core_contrast,
+            k=k,
+            x0=x0
         )
         image[:] = add_pillars(image)
 
