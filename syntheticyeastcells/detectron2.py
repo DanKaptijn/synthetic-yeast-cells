@@ -103,7 +103,8 @@ def create_dataset(destination,
                    background_contrast=0.00188,
                    core_contrast=0.0752,
                    p_white_outside=0.5,
-                   k=1, x0=0,
+                   k=1,
+                   x0=0,
                    njobs=40, batch_size=10,
                    progressbar=True):
     kwargs = {
