@@ -110,7 +110,7 @@ def create_background(cores,
     background /= background.std()
     cores = (cores > 0)
     a, b, z = background_contrast, core_contrast, background_intensity
-    background = numpy.clip(1/ (1 + e**-k*((z + (a + (b-a) * cores) * background)-x0) ), 0, 1)
+    background = numpy.clip(1/ (1 + e**(-k*((z + (a + (b-a) * cores) * background)-x0)) ), 0, 1)
 #     print("background = ", background)
     return background
 
