@@ -108,10 +108,10 @@ def create_background(cores,
     background = cv2.GaussianBlur(numpy.random.randn(*size), (n, n), spatial_blur_std , spatial_blur_std )
 
     background /= background.std()
+    print("background = ", background)
     cores = (cores > 0)
     a, b, z = background_contrast, core_contrast, background_intensity
     background = numpy.clip(1/ (1 + e**(-k*((z + (a + (b-a) * cores) * background)-x0)) ), 0, 1)
-#     print("background = ", background)
     return background
 
 
