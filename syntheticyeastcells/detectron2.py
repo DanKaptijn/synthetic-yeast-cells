@@ -92,7 +92,7 @@ def process_batch(destination, set_name, start, end,
 
 
 def create_dataset(destination,
-                   sets={'test': 1000, 'val': 1000, 'train': 20000},
+                   sets={'test': 1000, 'train': 20000, 'val': 1000},
                    n_cells_per_image=100,
                    size=(512, 512),
                    min_distance_boundary=50,    # minimum distance of center from image boundary
