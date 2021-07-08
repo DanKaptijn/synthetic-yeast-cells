@@ -63,7 +63,8 @@ def process_batch(destination, set_name, start, end,
     os.makedirs(f'{destination}/{set_name}/', exist_ok=True)
     left = [
         (i, fn) for i, fn in {
-            (i, f'{destination}/{set_name}/image-{i}.jpg')
+#             (i, f'{destination}/{set_name}/image-{i}.jpg')
+            (i, f'{set_name}/image-{i}.jpg')
             for i in range(start, end)
         }
         # if not os.path.exists(fn)
