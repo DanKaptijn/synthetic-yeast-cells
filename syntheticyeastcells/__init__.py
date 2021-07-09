@@ -194,6 +194,7 @@ def create_samples(n_images, n_cells_per_image=100,
                              min_distance_boundary=min_distance_boundary,
                              r0_range=r0_range, r1_factor_range=r1_factor_range,
                              p_white_outside=p_white_outside)
+        print(cells)
         image[:], label[:] = create_sample(
             size, cells,
             spatial_blur_std=spatial_blur_std,
