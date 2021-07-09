@@ -85,6 +85,7 @@ def process_batch(destination, set_name, start, end,
 
     data = []
     for (i, filename), label, image in zip(left, labels, images):
+#         cv2.imwrite(filename, image)
         cv2.imwrite(f'{destination}{filename}', image)
         data.append(get_annotations(label))
         data[-1]['file_name'] = filename
