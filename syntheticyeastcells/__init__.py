@@ -212,7 +212,7 @@ def create_samples(n_images, n_cells_per_image=100,
 #     print(images[0][0][0:1000])
 #     for i in range(0, len(labels[0])):
 #         print(f'{i} = ',labels[0][i][256])
-    pyplot.imshow([image for image in images])
+    pyplot.imshow([image[0] for image in images])
 
     return images, labels
 
