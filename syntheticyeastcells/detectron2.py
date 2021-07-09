@@ -126,8 +126,6 @@ def create_dataset(destination,
     results = dict()
     with Pool(njobs) as pool:
         for set_, n in sets.items():
-            print('set: ',set_)
-            print('n: ',n)
             results[set_] = [
                 pool.apply_async(process_batch,
                                  [destination, set_, start, end],
