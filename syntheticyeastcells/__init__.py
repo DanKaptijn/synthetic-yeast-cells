@@ -221,7 +221,7 @@ def create_samples(n_images, n_cells_per_image=100,
         for i in cells.index:
             x = cells['centerx'][i]
             y = cells['centery'][i]
-            r = cells['radius0'][i]
+            r = cells['radius0'][i]*2
             overlap = False
             overlap,no_of_deletions = check_cell((x+r,y),overlap,no_of_deletions,list_of_cell_coords)
             overlap,no_of_deletions = check_cell((x-r,y),overlap,no_of_deletions,list_of_cell_coords)
@@ -231,6 +231,7 @@ def create_samples(n_images, n_cells_per_image=100,
                 list_of_cell_coords = add_cell_coordinates_to_list(r,x,y,list_of_cell_coords)
             if overlap == True:
                 cells = cells.drop([i])
+        ### End Dan Code
         print("Number of cells deleted: ", no_of_deletions)
         image[:], label[:] = create_sample(
             size, cells,
