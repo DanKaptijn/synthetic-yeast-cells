@@ -227,8 +227,9 @@ def create_samples(n_images, n_cells_per_image=100,
             overlap = False
             cell_edge_coords = []
             for point in range(r+1):
+                edge_r = r*2
                 edge_x = point
-                edge_y = sqrt(r**2 - edge_x**2) # pythagoras
+                edge_y = sqrt(edge_r**2 - edge_x**2) # pythagoras
                 cell_edge_coords.append((x+edge_x,round(y+edge_y)))
                 cell_edge_coords.append((x+edge_x,round(y-edge_y)))
                 cell_edge_coords.append((x-edge_x,round(y+edge_y)))
