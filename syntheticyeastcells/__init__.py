@@ -219,13 +219,13 @@ def create_samples(n_images, n_cells_per_image=100,
                              p_white_outside=p_white_outside)
         ### Dan Code
         list_of_cell_coords = []
-        cell_edge_coords = []
         no_of_deletions = 0
         for i in cells.index:
             x = cells['centerx'][i]
             y = cells['centery'][i]
             r = cells['radius0'][i]
             overlap = False
+            cell_edge_coords = []
             for point in range(r+1):
                 edge_x = point
                 edge_y = sqrt(r**2 - edge_x**2) # pythagoras
