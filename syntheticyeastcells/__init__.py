@@ -4,8 +4,29 @@ import cv2
 from imgaug import augmenters as iaa
 from matplotlib import pyplot
 from math import e
+from math import sqrt
 
 
+
+### Dan func
+def check_cell(t, overlap, n, l):
+    if overlap == False:
+        if t in l: # l is a list containing all coordinates of cells per image
+            n += 1 # n is used to keep a track of how many cells get deleted per image
+            overlap = True # overlap tells the code to delete the cell when True
+            
+    return overlap, n
+
+### Dan func
+def add_cell_coordinates_to_list(r, x, y, l):
+    for i in range(-r, r+1):
+        r1 = round(sqrt(i**2))
+        r1 = r - r1
+        y1 = i
+        for x1 in range(-r1, r1+1):
+            l.append((x+x1, y+y1))
+            
+    return l
 
 def pillar_adder(size=(512, 512), pillars=[
     (slice(50, 300), slice(50, 200)),
@@ -194,7 +215,23 @@ def create_samples(n_images, n_cells_per_image=100,
                              min_distance_boundary=min_distance_boundary,
                              r0_range=r0_range, r1_factor_range=r1_factor_range,
                              p_white_outside=p_white_outside)
-        print(cells)
+        ### Dan Code
+        list_of_cell_coords = []
+        no_of_deletions = 0
+        for i in cells.index:
+            x = cells['centerx'][i]
+            y = cells['centery'][i]
+            r = cells['radius0'][i]
+            overlap = False
+            overlap,no_of_deletions = check_cell((x+r,y),overlap,no_of_deletions,list_of_cell_coords)
+            overlap,no_of_deletions = check_cell((x-r,y),overlap,no_of_deletions,list_of_cell_coords)
+            overlap,no_of_deletions = check_cell((x,y+r),overlap,no_of_deletions,list_of_cell_coords)
+            overlap,no_of_deletions = check_cell((x,y-r),overlap,no_of_deletions,list_of_cell_coords)
+            if overlap == False:
+                list_of_cell_coords = add_cell_coordinates_to_list(r,x,y,list_of_cell_coords)
+            if overlap == True:
+                cells = cells.drop([i])
+        print("Number of cells deleted: ", no_of_deletions)
         image[:], label[:] = create_sample(
             size, cells,
             spatial_blur_std=spatial_blur_std,
