@@ -227,16 +227,16 @@ def create_samples(n_images, n_cells_per_image=100,
             r = cells['radius0'][i]
             overlap = False
             for point in range(r+1):
-                x = point
-                y = sqrt(r**2 - x**2) # pythagoras
-                cell_edge_coords.append((x,round(y)))
-                cell_edge_coords.append((x,-round(y)))
-                cell_edge_coords.append((-x,round(y)))
-                cell_edge_coords.append((-x,-round(y)))
-                cell_edge_coords.append((round(y),x))
-                cell_edge_coords.append((-round(y),x))
-                cell_edge_coords.append((round(y),-x))
-                cell_edge_coords.append((-round(y),-x))
+                edge_x = point
+                edge_y = sqrt(r**2 - edge_x**2) # pythagoras
+                cell_edge_coords.append((x+edge_x,round(y+edge_y)))
+                cell_edge_coords.append((x+edge_x,round(y-edge_y)))
+                cell_edge_coords.append((x-edge_x,round(y+edge_y)))
+                cell_edge_coords.append((x-edge_x,round(y-edge_y)))
+                cell_edge_coords.append((round(y+edge_y),x+edge_x))
+                cell_edge_coords.append((-round(y-edge_y),x+edge_x))
+                cell_edge_coords.append((round(y+edge_y),x-edge_x))
+                cell_edge_coords.append((-round(y-edge_y),x-edge_x))
                 cell_edge_coords = set(cell_edge_coords)
                 cell_edge_coords = list(cell_edge_coords)
                 overlap,no_of_deletions = check_cell(cell_edge_coords, overlap, no_of_deletions, list_of_cell_coords)
