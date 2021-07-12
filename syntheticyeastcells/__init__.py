@@ -11,9 +11,11 @@ from math import sqrt
 ### Dan func
 def check_cell(t, overlap, n, l):
     if overlap == False:
-        if t in l: # l is a list containing all coordinates of cells per image
-            n += 1 # n is used to keep a track of how many cells get deleted per image
-            overlap = True # overlap tells the code to delete the cell when True
+        for coord in t:
+            if t in l: # l is a list containing all coordinates of cells per image
+                n += 1 # n is used to keep a track of how many cells get deleted per image
+                overlap = True # overlap tells the code to delete the cell when True
+                break
             
     return overlap, n
 
@@ -217,20 +219,35 @@ def create_samples(n_images, n_cells_per_image=100,
                              p_white_outside=p_white_outside)
         ### Dan Code
         list_of_cell_coords = []
+        cell_edge_coords = []
         no_of_deletions = 0
         for i in cells.index:
             x = cells['centerx'][i]
             y = cells['centery'][i]
-            r = cells['radius0'][i]*2
+            r = cells['radius0'][i]
             overlap = False
-            overlap,no_of_deletions = check_cell((x+r,y),overlap,no_of_deletions,list_of_cell_coords)
-            overlap,no_of_deletions = check_cell((x+r/2,y),overlap,no_of_deletions,list_of_cell_coords)
-            overlap,no_of_deletions = check_cell((x-r,y),overlap,no_of_deletions,list_of_cell_coords)
-            overlap,no_of_deletions = check_cell((x-r/2,y),overlap,no_of_deletions,list_of_cell_coords)
-            overlap,no_of_deletions = check_cell((x,y+r),overlap,no_of_deletions,list_of_cell_coords)
-            overlap,no_of_deletions = check_cell((x,y+r/2),overlap,no_of_deletions,list_of_cell_coords)
-            overlap,no_of_deletions = check_cell((x,y-r),overlap,no_of_deletions,list_of_cell_coords)
-            overlap,no_of_deletions = check_cell((x,y-r/2),overlap,no_of_deletions,list_of_cell_coords)
+            for point in range(r+1):
+                x = point
+                y = sqrt(r**2 - x**2) # pythagoras
+                cell_edge_coords.append((x,round(y)))
+                cell_edge_coords.append((x,-round(y)))
+                cell_edge_coords.append((-x,round(y)))
+                cell_edge_coords.append((-x,-round(y)))
+                cell_edge_coords.append((round(y),x))
+                cell_edge_coords.append((-round(y),x))
+                cell_edge_coords.append((round(y),-x))
+                cell_edge_coords.append((-round(y),-x))
+                cell_edge_coords = set(cell_edge_coords)
+                cell_edge_coords = list(cell_edge_coords)
+                overlap,no_of_deletions = check_cell(cell_edge_coords, overlap, no_of_deletions, list_of_cell_coords)
+#             overlap,no_of_deletions = check_cell((x+r,y),overlap,no_of_deletions,list_of_cell_coords)
+#             overlap,no_of_deletions = check_cell((x+r/2,y),overlap,no_of_deletions,list_of_cell_coords)
+#             overlap,no_of_deletions = check_cell((x-r,y),overlap,no_of_deletions,list_of_cell_coords)
+#             overlap,no_of_deletions = check_cell((x-r/2,y),overlap,no_of_deletions,list_of_cell_coords)
+#             overlap,no_of_deletions = check_cell((x,y+r),overlap,no_of_deletions,list_of_cell_coords)
+#             overlap,no_of_deletions = check_cell((x,y+r/2),overlap,no_of_deletions,list_of_cell_coords)
+#             overlap,no_of_deletions = check_cell((x,y-r),overlap,no_of_deletions,list_of_cell_coords)
+#             overlap,no_of_deletions = check_cell((x,y-r/2),overlap,no_of_deletions,list_of_cell_coords)
             if overlap == False:
                 list_of_cell_coords = add_cell_coordinates_to_list(r,x,y,list_of_cell_coords)
             if overlap == True:
