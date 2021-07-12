@@ -223,32 +223,32 @@ def create_samples(n_images, n_cells_per_image=100,
         for i in cells.index:
             x = cells['centerx'][i]
             y = cells['centery'][i]
-            r = cells['radius0'][i]
+            r = cells['radius0'][i]*2
             overlap = False
-            cell_edge_coords = []
-            for point in range(r+1):
-                edge_r = r*2
-                edge_x = point
-                edge_y = sqrt(edge_r**2 - edge_x**2) # pythagoras
-                cell_edge_coords.append((x+edge_x,round(y+edge_y)))
-                cell_edge_coords.append((x+edge_x,round(y-edge_y)))
-                cell_edge_coords.append((x-edge_x,round(y+edge_y)))
-                cell_edge_coords.append((x-edge_x,round(y-edge_y)))
-                cell_edge_coords.append((round(y+edge_y),x+edge_x))
-                cell_edge_coords.append((round(y-edge_y),x+edge_x))
-                cell_edge_coords.append((round(y+edge_y),x-edge_x))
-                cell_edge_coords.append((round(y-edge_y),x-edge_x))
-                cell_edge_coords = set(cell_edge_coords)
-                cell_edge_coords = list(cell_edge_coords)
-                overlap,no_of_deletions = check_cell(cell_edge_coords, overlap, no_of_deletions, list_of_cell_coords)
-#             overlap,no_of_deletions = check_cell((x+r,y),overlap,no_of_deletions,list_of_cell_coords)
-#             overlap,no_of_deletions = check_cell((x+r/2,y),overlap,no_of_deletions,list_of_cell_coords)
-#             overlap,no_of_deletions = check_cell((x-r,y),overlap,no_of_deletions,list_of_cell_coords)
-#             overlap,no_of_deletions = check_cell((x-r/2,y),overlap,no_of_deletions,list_of_cell_coords)
-#             overlap,no_of_deletions = check_cell((x,y+r),overlap,no_of_deletions,list_of_cell_coords)
-#             overlap,no_of_deletions = check_cell((x,y+r/2),overlap,no_of_deletions,list_of_cell_coords)
-#             overlap,no_of_deletions = check_cell((x,y-r),overlap,no_of_deletions,list_of_cell_coords)
-#             overlap,no_of_deletions = check_cell((x,y-r/2),overlap,no_of_deletions,list_of_cell_coords)
+#             cell_edge_coords = []
+#             for point in range(r+1):
+#                 edge_r = r*2
+#                 edge_x = point
+#                 edge_y = sqrt(edge_r**2 - edge_x**2) # pythagoras
+#                 cell_edge_coords.append((x+edge_x,round(y+edge_y)))
+#                 cell_edge_coords.append((x+edge_x,round(y-edge_y)))
+#                 cell_edge_coords.append((x-edge_x,round(y+edge_y)))
+#                 cell_edge_coords.append((x-edge_x,round(y-edge_y)))
+#                 cell_edge_coords.append((round(y+edge_y),x+edge_x))
+#                 cell_edge_coords.append((round(y-edge_y),x+edge_x))
+#                 cell_edge_coords.append((round(y+edge_y),x-edge_x))
+#                 cell_edge_coords.append((round(y-edge_y),x-edge_x))
+#                 cell_edge_coords = set(cell_edge_coords)
+#                 cell_edge_coords = list(cell_edge_coords)
+#                 overlap,no_of_deletions = check_cell(cell_edge_coords, overlap, no_of_deletions, list_of_cell_coords)
+            overlap,no_of_deletions = check_cell((x+r,y),overlap,no_of_deletions,list_of_cell_coords)
+            overlap,no_of_deletions = check_cell((x+r/2,y),overlap,no_of_deletions,list_of_cell_coords)
+            overlap,no_of_deletions = check_cell((x-r,y),overlap,no_of_deletions,list_of_cell_coords)
+            overlap,no_of_deletions = check_cell((x-r/2,y),overlap,no_of_deletions,list_of_cell_coords)
+            overlap,no_of_deletions = check_cell((x,y+r),overlap,no_of_deletions,list_of_cell_coords)
+            overlap,no_of_deletions = check_cell((x,y+r/2),overlap,no_of_deletions,list_of_cell_coords)
+            overlap,no_of_deletions = check_cell((x,y-r),overlap,no_of_deletions,list_of_cell_coords)
+            overlap,no_of_deletions = check_cell((x,y-r/2),overlap,no_of_deletions,list_of_cell_coords)
             if overlap == False:
                 list_of_cell_coords = add_cell_coordinates_to_list(r,x,y,list_of_cell_coords)
             if overlap == True:
