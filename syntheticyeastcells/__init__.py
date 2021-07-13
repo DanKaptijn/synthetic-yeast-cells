@@ -227,8 +227,6 @@ def create_samples(n_images, n_cells_per_image=100,
             s=2
         if strictness == 'high':
             s=3
-        print("strictness: ", strictness)
-        print("s: ", s)
         for i in cells.index:
             x = cells['centerx'][i]
             y = cells['centery'][i]
