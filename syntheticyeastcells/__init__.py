@@ -271,9 +271,9 @@ def create_samples(n_images, n_cells_per_image=100,
                 bud_radius = 2
                 r1_factor = randint_range(*r1_factor_range, dtype=numpy.float)
                 new_bud = {
-                    'centerx':[x+r+bud_radius], 
-                    'centery':[y], 
-                    'radius0':[bud_radius],
+                    'centerx':[(x+r+bud_radius).astype(numpy.int)], 
+                    'centery':[(y).astype(numpy.int)], 
+                    'radius0':[(bud_radius).astype(numpy.int)],
                     'radius1':[(bud_radius * r1_factor).astype(numpy.int)],
                     'angle':  [randint_range(0, 360)],
                     'white-outside': [numpy.random.rand(n) < p_white_outside]}
