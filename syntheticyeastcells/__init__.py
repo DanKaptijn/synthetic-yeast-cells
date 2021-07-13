@@ -218,9 +218,14 @@ def create_samples(n_images, n_cells_per_image=100,
                              min_distance_boundary=min_distance_boundary,
                              r0_range=r0_range, r1_factor_range=r1_factor_range,
                              p_white_outside=p_white_outside)
+        
+    def randint_range(a, b, dtype=numpy.int):
+        return (a + numpy.random.rand(n) * (b - a)).astype(dtype)
+    
         ### Dan Code
         list_of_cell_coords = []
         no_of_deletions = 0
+        bud_cells = 1
         if strictness == 'low':
             s=1
         if strictness == 'normal':
@@ -260,9 +265,19 @@ def create_samples(n_images, n_cells_per_image=100,
                 list_of_cell_coords = add_cell_coordinates_to_list(r*s,x,y,list_of_cell_coords)
             if overlap == True:
                 cells = cells.drop([i])
+            if bud_cells == 1:
+                bud_cells += 1
+                bud_radius = 2
+                new_bud = {
+                    'centerx':x+r+bud_radius, 
+                    'centery':y, 
+                    'radius0':bud_radius,
+                    'radius1':(bud_radius * r1_factor).astype(numpy.int),
+                    'angle':  randint_range(0, 360),
+                    'white-outside': numpy.random.rand(n) < p_white_outside}
+                cells = cells.append(new_bud, ignore_index=True)
         ### End Dan Code
         print("Number of cells deleted: ", no_of_deletions)
-        print(cells)
         image[:], label[:] = create_sample(
             size, cells,
             spatial_blur_std=spatial_blur_std,
