@@ -234,7 +234,6 @@ def create_samples(n_images, n_cells_per_image=100,
                      'radius1':[],
                      'angle':[],
                      'white-outside':[]}
-        print(new_cells)
         if strictness == 'low':
             s=1
         if strictness == 'normal':
