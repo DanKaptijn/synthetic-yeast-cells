@@ -293,7 +293,7 @@ def create_samples(n_images, n_cells_per_image=100,
         if bud_check == 1:
             new_cells = pandas.DataFrame(new_cells)
             cells = cells.append(new_cells, ignore_index=True)
-        print("Number of cells deleted: ", no_of_deletions)
+#         print("Number of cells deleted: ", no_of_deletions)
         ### End Dan Code
         image[:], label[:] = create_sample(
             size, cells,
