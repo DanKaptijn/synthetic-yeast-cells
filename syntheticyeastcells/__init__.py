@@ -226,6 +226,7 @@ def create_samples(n_images, n_cells_per_image=100,
         list_of_cell_coords = []
         no_of_deletions = 0
         bud_cells = 1
+        n = n_cells_per_image
         if strictness == 'low':
             s=1
         if strictness == 'normal':
