@@ -269,12 +269,12 @@ def create_samples(n_images, n_cells_per_image=100,
                 bud_cells += 1
                 bud_radius = 2
                 new_bud = {
-                    'centerx':x+r+bud_radius, 
-                    'centery':y, 
-                    'radius0':bud_radius,
-                    'radius1':(bud_radius * r1_factor).astype(numpy.int),
-                    'angle':  randint_range(0, 360),
-                    'white-outside': numpy.random.rand(n) < p_white_outside}
+                    'centerx':[x+r+bud_radius], 
+                    'centery':[y], 
+                    'radius0':[bud_radius],
+                    'radius1':[(bud_radius * r1_factor).astype(numpy.int)],
+                    'angle':  [randint_range(0, 360)],
+                    'white-outside': [numpy.random.rand(n) < p_white_outside]}
                 cells = cells.append(new_bud, ignore_index=True)
         ### End Dan Code
         print("Number of cells deleted: ", no_of_deletions)
