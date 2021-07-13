@@ -225,7 +225,7 @@ def create_samples(n_images, n_cells_per_image=100,
         ### Dan Code
         list_of_cell_coords = []
         no_of_deletions = 0
-        bud_cells = 1
+        bud_cells = 0
         n = n_cells_per_image
         if strictness == 'low':
             s=1
@@ -267,9 +267,10 @@ def create_samples(n_images, n_cells_per_image=100,
                 list_of_cell_coords = add_cell_coordinates_to_list(r*s,x,y,list_of_cell_coords)
             if overlap == True:
                 cells = cells.drop([i])
-            if bud_cells == 1:
-                bud_cells += 1
-                bud_radius = 2
+            bud_cells += 1
+            if bud_cells == 4:
+                bud_cells = 0
+                bud_radius = 4
                 r1_factor = randint_range(*r1_factor_range, dtype=numpy.float)
                 new_bud = {
                     'centerx':(x+r+bud_radius).astype(numpy.int), 
