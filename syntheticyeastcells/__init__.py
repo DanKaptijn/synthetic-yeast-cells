@@ -227,12 +227,12 @@ def create_samples(n_images, n_cells_per_image=100,
         no_of_deletions = 0
         bud_cells = 0
         n = n_cells_per_image
-        new_cells = pandas.DataFrame({'centerx':[].astype(numpy.int),
-                                     'centery':[].astype(numpy.int),
-                                     'radius0':[].astype(numpy.int),
-                                     'radius1':[].astype(numpy.int),
-                                     'angle':[].astype(numpy.int),
-                                     'white-outside':[]})
+        new_cells = {'centerx':[],
+                     'centery':[],
+                     'radius0':[],
+                     'radius1':[],
+                     'angle':[],
+                     'white-outside':[]}
         print(new_cells)
         if strictness == 'low':
             s=1
@@ -285,8 +285,10 @@ def create_samples(n_images, n_cells_per_image=100,
                     'radius1':((bud_radius * r1_factor).astype(numpy.int))[0],
                     'angle':(randint_range(0, 360))[0],
                     'white-outside': (numpy.random.rand(n) < p_white_outside)[0]}
-                new_cells = new_cells.append(new_bud, ignore_index=True)
-        ### End Dan Code        
+                for key,val in new_bud:
+                    new_cells[key].append(new_bud[key])
+        ### End Dan Code
+        new_cells = pandas.DataFrame(new_cells)
         print("Number of cells deleted: ", no_of_deletions)
         print(new_cells)
 #         cells = cells.append(new_cells, ignore_index=True)
