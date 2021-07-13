@@ -58,7 +58,8 @@ def process_batch(destination, set_name, start, end,
                   core_contrast=0.0752,
                   p_white_outside=0.5,
                   k=1,
-                  x0=0
+                  x0=0,
+                  strictness='normal'
                  ):
     os.makedirs(f'{destination}/{set_name}/', exist_ok=True)
     left = [
@@ -81,7 +82,8 @@ def process_batch(destination, set_name, start, end,
        core_contrast=core_contrast,
        p_white_outside=p_white_outside,
        k=k,
-       x0=x0)
+       x0=x0,
+       strictness='normal')
 
     data = []
     for (i, filename), label, image in zip(left, labels, images):
@@ -107,6 +109,7 @@ def create_dataset(destination,
                    p_white_outside=0.5,
                    k=1,
                    x0=0,
+                   strictness='normal',
                    njobs=40, batch_size=10,
                    progressbar=True):
     kwargs = {
@@ -120,7 +123,8 @@ def create_dataset(destination,
         'core_contrast': core_contrast,
         'p_white_outside': p_white_outside,
         'k': k,
-        'x0': x0}
+        'x0': x0,
+        'strictness': strictness}
     progressbar = tqdm if progressbar else (lambda x: x)
 
     results = dict()
