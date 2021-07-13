@@ -274,7 +274,7 @@ def create_samples(n_images, n_cells_per_image=100,
             if overlap == True:
                 cells = cells.drop([i])
             bud_cells += 1
-            if bud_cells == 1:
+            if bud_cells == 4:
                 bud_cells = 0
                 bud_radius = 4
                 r1_factor = randint_range(*r1_factor_range, dtype=numpy.float)
