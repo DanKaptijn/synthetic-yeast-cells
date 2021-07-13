@@ -274,8 +274,9 @@ def create_samples(n_images, n_cells_per_image=100,
                 list_of_cell_coords = add_cell_coordinates_to_list(r*s,x,y,list_of_cell_coords)
             if overlap == True:
                 cells = cells.drop([i])
-            no_of_bud_cells += 1
-            if bud_cells == 1 and no_of_bud_cells == 4:
+            if overlap == False:
+                no_of_bud_cells += 1
+            if bud_cells == 1 and no_of_bud_cells == 4 and overlap == False:
                 bud_check = 1
                 no_of_bud_cells = 0 # this way a bud is not created for every cell
                 bud_radius = 4
