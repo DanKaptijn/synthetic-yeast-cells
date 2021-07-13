@@ -274,7 +274,7 @@ def create_samples(n_images, n_cells_per_image=100,
             if overlap == True:
                 cells = cells.drop([i])
             bud_cells += 1
-            if bud_cells == 4:
+            if bud_cells == 1:
                 bud_cells = 0
                 bud_radius = 4
                 r1_factor = randint_range(*r1_factor_range, dtype=numpy.float)
@@ -289,7 +289,7 @@ def create_samples(n_images, n_cells_per_image=100,
         ### End Dan Code        
         print("Number of cells deleted: ", no_of_deletions)
         print(new_cells)
-        cells = cells.append(new_cells, ignore_index=True)
+#         cells = cells.append(new_cells, ignore_index=True)
         print(cells)
         image[:], label[:] = create_sample(
             size, cells,
