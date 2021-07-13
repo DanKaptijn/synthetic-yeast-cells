@@ -233,6 +233,7 @@ def create_samples(n_images, n_cells_per_image=100,
             s=2
         if strictness == 'high':
             s=3
+        print(cells)
         for i in cells.index:
             x = cells['centerx'][i]
             y = cells['centery'][i]
@@ -277,9 +278,11 @@ def create_samples(n_images, n_cells_per_image=100,
                     'radius1':[(bud_radius * r1_factor).astype(numpy.int)],
                     'angle':  [randint_range(0, 360)],
                     'white-outside': [numpy.random.rand(n) < p_white_outside]}
+                print(new_bud)
                 cells = cells.append(new_bud, ignore_index=True)
         ### End Dan Code
         print("Number of cells deleted: ", no_of_deletions)
+        print(cells)
         image[:], label[:] = create_sample(
             size, cells,
             spatial_blur_std=spatial_blur_std,
