@@ -209,6 +209,9 @@ def create_samples(n_images, n_cells_per_image=100,
     are returned. The latter can be used as labels in the segmentation learning
     task"""
     add_pillars = pillar_adder(size)
+        
+    def randint_range(a, b, dtype=numpy.int):
+        return (a + numpy.random.rand(n) * (b - a)).astype(dtype)
 
     images = numpy.zeros((n_images, ) + size)
     labels = numpy.zeros((n_images, ) + size, dtype=numpy.int32)
@@ -218,9 +221,6 @@ def create_samples(n_images, n_cells_per_image=100,
                              min_distance_boundary=min_distance_boundary,
                              r0_range=r0_range, r1_factor_range=r1_factor_range,
                              p_white_outside=p_white_outside)
-        
-    def randint_range(a, b, dtype=numpy.int):
-        return (a + numpy.random.rand(n) * (b - a)).astype(dtype)
     
         ### Dan Code
         list_of_cell_coords = []
