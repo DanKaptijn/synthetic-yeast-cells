@@ -227,11 +227,11 @@ def create_samples(n_images, n_cells_per_image=100,
         no_of_deletions = 0
         bud_cells = 0
         n = n_cells_per_image
-        new_cells = pandas.DataFrame({'centerx':[],
-                                     'centery':[],
-                                     'radius0':[],
-                                     'radius1':[],
-                                     'angle':[],
+        new_cells = pandas.DataFrame({'centerx':[].astype(numpy.int),
+                                     'centery':[].astype(numpy.int),
+                                     'radius0':[].astype(numpy.int),
+                                     'radius1':[].astype(numpy.int),
+                                     'angle':[].astype(numpy.int),
                                      'white-outside':[]})
         print(new_cells)
         if strictness == 'low':
