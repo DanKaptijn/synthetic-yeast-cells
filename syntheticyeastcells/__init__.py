@@ -11,11 +11,11 @@ from math import sqrt
 ### Dan func
 def check_cell(t, overlap, n, l):
     if overlap == False:
-        for coord in t:
-            if coord in l: # l is a list containing all coordinates of cells per image
-                n += 1 # n is used to keep a track of how many cells get deleted per image
-                overlap = True # overlap tells the code to delete the cell when True
-                break
+#         for coord in t:
+        if t in l: # l is a list containing all coordinates of cells per image
+            n += 1 # n is used to keep a track of how many cells get deleted per image
+            overlap = True # overlap tells the code to delete the cell when True
+            break
             
     return overlap, n
 
