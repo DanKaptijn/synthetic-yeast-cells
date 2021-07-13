@@ -226,6 +226,7 @@ def create_samples(n_images, n_cells_per_image=100,
         list_of_cell_coords = []
         no_of_deletions = 0
         bud_cells = 0
+        bud_check = 0
         n = n_cells_per_image
         new_cells = {'centerx':[],
                      'centery':[],
@@ -275,6 +276,7 @@ def create_samples(n_images, n_cells_per_image=100,
                 cells = cells.drop([i])
             bud_cells += 1
             if bud_cells == 4:
+                bud_check = 1
                 bud_cells = 0
                 bud_radius = 4
                 r1_factor = randint_range(*r1_factor_range, dtype=numpy.float)
@@ -287,9 +289,10 @@ def create_samples(n_images, n_cells_per_image=100,
                     'white-outside': (numpy.random.rand(n) < p_white_outside)[0]}
                 for key,val in new_bud.items():
                     new_cells[key].append(new_bud[key])
-        new_cells = pandas.DataFrame(new_cells)
+        if bud_check == 1:
+            new_cells = pandas.DataFrame(new_cells)
+            cells = cells.append(new_cells, ignore_index=True)
         print("Number of cells deleted: ", no_of_deletions)
-        cells = cells.append(new_cells, ignore_index=True)
         ### End Dan Code
         image[:], label[:] = create_sample(
             size, cells,
