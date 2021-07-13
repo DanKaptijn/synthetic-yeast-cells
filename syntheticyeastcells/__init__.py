@@ -285,6 +285,7 @@ def create_samples(n_images, n_cells_per_image=100,
                     'radius1':((bud_radius * r1_factor).astype(numpy.int))[0],
                     'angle':(randint_range(0, 360))[0],
                     'white-outside': (numpy.random.rand(n) < p_white_outside)[0]}
+                print(new_bud)
                 for key,val in new_bud:
                     new_cells[key].append(new_bud[key])
         ### End Dan Code
