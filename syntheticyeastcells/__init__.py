@@ -233,6 +233,7 @@ def create_samples(n_images, n_cells_per_image=100,
                                      'radius1':[],
                                      'angle':[],
                                      'white-outside':[]})
+        print(new_cells)
         if strictness == 'low':
             s=1
         if strictness == 'normal':
@@ -285,9 +286,11 @@ def create_samples(n_images, n_cells_per_image=100,
                     'angle':(randint_range(0, 360))[0],
                     'white-outside': (numpy.random.rand(n) < p_white_outside)[0]}
                 new_cells = new_cells.append(new_bud, ignore_index=True)
-        ### End Dan Code
+        ### End Dan Code        
         print("Number of cells deleted: ", no_of_deletions)
+        print(new_cells)
         cells = cells.append(new_cells, ignore_index=True)
+        print(cells)
         image[:], label[:] = create_sample(
             size, cells,
             spatial_blur_std=spatial_blur_std,
