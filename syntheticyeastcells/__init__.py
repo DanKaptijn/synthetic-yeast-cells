@@ -223,7 +223,7 @@ def create_samples(n_images, n_cells_per_image=100,
         for i in cells.index:
             x = cells['centerx'][i]
             y = cells['centery'][i]
-            r = cells['radius0'][i]*2
+            r = cells['radius0'][i]
             overlap = False
 #             cell_edge_coords = []
 #             for point in range(r+1):
@@ -242,15 +242,15 @@ def create_samples(n_images, n_cells_per_image=100,
 #                 cell_edge_coords = list(cell_edge_coords)
 #                 overlap,no_of_deletions = check_cell(cell_edge_coords, overlap, no_of_deletions, list_of_cell_coords)
             overlap,no_of_deletions = check_cell((x+r,y),overlap,no_of_deletions,list_of_cell_coords)
-            overlap,no_of_deletions = check_cell((x+r/2,y),overlap,no_of_deletions,list_of_cell_coords)
+            overlap,no_of_deletions = check_cell((x+r*2,y),overlap,no_of_deletions,list_of_cell_coords)
             overlap,no_of_deletions = check_cell((x-r,y),overlap,no_of_deletions,list_of_cell_coords)
-            overlap,no_of_deletions = check_cell((x-r/2,y),overlap,no_of_deletions,list_of_cell_coords)
+            overlap,no_of_deletions = check_cell((x-r*2,y),overlap,no_of_deletions,list_of_cell_coords)
             overlap,no_of_deletions = check_cell((x,y+r),overlap,no_of_deletions,list_of_cell_coords)
-            overlap,no_of_deletions = check_cell((x,y+r/2),overlap,no_of_deletions,list_of_cell_coords)
+            overlap,no_of_deletions = check_cell((x,y+r*2),overlap,no_of_deletions,list_of_cell_coords)
             overlap,no_of_deletions = check_cell((x,y-r),overlap,no_of_deletions,list_of_cell_coords)
-            overlap,no_of_deletions = check_cell((x,y-r/2),overlap,no_of_deletions,list_of_cell_coords)
+            overlap,no_of_deletions = check_cell((x,y-r*2),overlap,no_of_deletions,list_of_cell_coords)
             if overlap == False:
-                list_of_cell_coords = add_cell_coordinates_to_list(r,x,y,list_of_cell_coords)
+                list_of_cell_coords = add_cell_coordinates_to_list(r*3,x,y,list_of_cell_coords)
             if overlap == True:
                 cells = cells.drop([i])
         ### End Dan Code
