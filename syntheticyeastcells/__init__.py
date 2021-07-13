@@ -199,7 +199,8 @@ def create_samples(n_images, n_cells_per_image=100,
                    core_contrast=0.0752,
                    p_white_outside=1.0,
                    k=1,
-                   x0=0
+                   x0=0,
+                   strictness='normal'
                   ):
     """Creates `n` `sz` x `sz` synthetic images of out of focus cells, 
     with m cells in each one. Then for each of the `n` images, `r` repetitions
@@ -220,6 +221,12 @@ def create_samples(n_images, n_cells_per_image=100,
         ### Dan Code
         list_of_cell_coords = []
         no_of_deletions = 0
+        if strictness == 'low':
+            s=1
+        if strictness == 'normal':
+            s=2
+        if strictness == 'high':
+            s=3
         for i in cells.index:
             x = cells['centerx'][i]
             y = cells['centery'][i]
@@ -250,7 +257,7 @@ def create_samples(n_images, n_cells_per_image=100,
             overlap,no_of_deletions = check_cell((x,y-r),overlap,no_of_deletions,list_of_cell_coords)
             overlap,no_of_deletions = check_cell((x,y-r*2),overlap,no_of_deletions,list_of_cell_coords)
             if overlap == False:
-                list_of_cell_coords = add_cell_coordinates_to_list(r*3,x,y,list_of_cell_coords)
+                list_of_cell_coords = add_cell_coordinates_to_list(r*s,x,y,list_of_cell_coords)
             if overlap == True:
                 cells = cells.drop([i])
         ### End Dan Code
