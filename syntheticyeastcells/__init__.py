@@ -262,6 +262,7 @@ def create_samples(n_images, n_cells_per_image=100,
                 cells = cells.drop([i])
         ### End Dan Code
         print("Number of cells deleted: ", no_of_deletions)
+        print(cells)
         image[:], label[:] = create_sample(
             size, cells,
             spatial_blur_std=spatial_blur_std,
