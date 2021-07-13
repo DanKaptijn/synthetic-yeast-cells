@@ -200,7 +200,8 @@ def create_samples(n_images, n_cells_per_image=100,
                    p_white_outside=1.0,
                    k=1,
                    x0=0,
-                   strictness='normal'
+                   strictness='normal',
+                   bud_cells=0
                   ):
     """Creates `n` `sz` x `sz` synthetic images of out of focus cells, 
     with m cells in each one. Then for each of the `n` images, `r` repetitions
@@ -225,7 +226,7 @@ def create_samples(n_images, n_cells_per_image=100,
         ### Dan Code
         list_of_cell_coords = []
         no_of_deletions = 0
-        bud_cells = 0
+        no_of_bud_cells = 0
         bud_check = 0
         n = n_cells_per_image
         new_cells = {'centerx':[],
@@ -273,10 +274,10 @@ def create_samples(n_images, n_cells_per_image=100,
                 list_of_cell_coords = add_cell_coordinates_to_list(r*s,x,y,list_of_cell_coords)
             if overlap == True:
                 cells = cells.drop([i])
-            bud_cells += 1
-            if bud_cells == 4:
+            no_of_bud_cells += 1
+            if bud_cells == 1 and no_of_bud_cells == 4:
                 bud_check = 1
-                bud_cells = 0
+                no_of_bud_cells = 0 # this way a bud is not created for every cell
                 bud_radius = 4
                 r1_factor = randint_range(*r1_factor_range, dtype=numpy.float)
                 new_bud = {
