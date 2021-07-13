@@ -287,12 +287,10 @@ def create_samples(n_images, n_cells_per_image=100,
                     'white-outside': (numpy.random.rand(n) < p_white_outside)[0]}
                 for key,val in new_bud.items():
                     new_cells[key].append(new_bud[key])
-        ### End Dan Code
         new_cells = pandas.DataFrame(new_cells)
         print("Number of cells deleted: ", no_of_deletions)
-        print(new_cells)
-#         cells = cells.append(new_cells, ignore_index=True)
-        print(cells)
+        cells = cells.append(new_cells, ignore_index=True)
+        ### End Dan Code
         image[:], label[:] = create_sample(
             size, cells,
             spatial_blur_std=spatial_blur_std,
