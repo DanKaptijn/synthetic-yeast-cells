@@ -268,6 +268,7 @@ def create_samples(n_images, n_cells_per_image=100,
             if bud_cells == 1:
                 bud_cells += 1
                 bud_radius = 2
+                r1_factor = randint_range(*r1_factor_range, dtype=numpy.float)
                 new_bud = {
                     'centerx':[x+r+bud_radius], 
                     'centery':[y], 
