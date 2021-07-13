@@ -200,7 +200,7 @@ def create_samples(n_images, n_cells_per_image=100,
                    p_white_outside=1.0,
                    k=1,
                    x0=0,
-                   strictness=1
+                   strictness='normal'
                   ):
     """Creates `n` `sz` x `sz` synthetic images of out of focus cells, 
     with m cells in each one. Then for each of the `n` images, `r` repetitions
@@ -221,11 +221,11 @@ def create_samples(n_images, n_cells_per_image=100,
         ### Dan Code
         list_of_cell_coords = []
         no_of_deletions = 0
-        if strictness == 0:
+        if strictness == 'low':
             s=1
-        if strictness == 1:
+        if strictness == 'normal':
             s=2
-        if strictness == 2:
+        if strictness == 'high':
             s=3
         print("strictness: ", strictness)
         print("s: ", s)
