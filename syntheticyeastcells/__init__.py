@@ -264,7 +264,7 @@ def create_samples(n_images, n_cells_per_image=100,
 #                 cell_edge_coords = set(cell_edge_coords)
 #                 cell_edge_coords = list(cell_edge_coords)
 #                 overlap,no_of_deletions = check_cell(cell_edge_coords, overlap, no_of_deletions, list_of_cell_coords)
-            if strictness.lower() == 'none':
+            if strictness.lower() != 'none':
                 overlap,no_of_deletions = check_cell((x,y),overlap,no_of_deletions,list_of_cell_coords)
                 overlap,no_of_deletions = check_cell((x+r,y),overlap,no_of_deletions,list_of_cell_coords)
                 overlap,no_of_deletions = check_cell((x+r*2,y),overlap,no_of_deletions,list_of_cell_coords)
