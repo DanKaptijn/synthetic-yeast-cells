@@ -1,6 +1,7 @@
 import os
 from multiprocessing.pool import Pool
 from numba import cuda
+print(cuda.gpus)
 
 import cv2
 import numpy
