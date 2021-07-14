@@ -274,17 +274,16 @@ def create_samples(n_images, n_cells_per_image=100,
             overlap,no_of_deletions = check_cell((x,y-r*2),overlap,no_of_deletions,list_of_cell_coords)
             if overlap == False:
                 list_of_cell_coords = add_cell_coordinates_to_list(r*s,x,y,list_of_cell_coords)
+                no_of_bud_cells += 1
             if overlap == True:
                 cells = cells.drop([i])
-            if overlap == False:
-                no_of_bud_cells += 1
             if bud_cells == 1 and no_of_bud_cells == 4 and overlap == False:
                 bud_check = 1
                 no_of_bud_cells = 0 # this way a bud is not created for every cell
                 bud_radius = (2,4) # controls size range of the buds
                 r0 = randint_range(*bud_radius)[0]
                 r1_factor = randint_range(*r1_factor_range, dtype=numpy.float)
-                direction_num = randint(1,4)
+                direction_num = randint(1,4) # decides where the bud will appear on a cell (above,below,left or right)
                 if direction_num == 1:
                     direction_x = r
                     direction_y = 0
