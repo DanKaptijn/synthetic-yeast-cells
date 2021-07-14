@@ -262,6 +262,7 @@ def create_samples(n_images, n_cells_per_image=100,
 #                 cell_edge_coords = set(cell_edge_coords)
 #                 cell_edge_coords = list(cell_edge_coords)
 #                 overlap,no_of_deletions = check_cell(cell_edge_coords, overlap, no_of_deletions, list_of_cell_coords)
+            overlap,no_of_deletions = check_cell((x,y),overlap,no_of_deletions,list_of_cell_coords)
             overlap,no_of_deletions = check_cell((x+r,y),overlap,no_of_deletions,list_of_cell_coords)
             overlap,no_of_deletions = check_cell((x+r*2,y),overlap,no_of_deletions,list_of_cell_coords)
             overlap,no_of_deletions = check_cell((x-r,y),overlap,no_of_deletions,list_of_cell_coords)
@@ -279,13 +280,14 @@ def create_samples(n_images, n_cells_per_image=100,
             if bud_cells == 1 and no_of_bud_cells == 4 and overlap == False:
                 bud_check = 1
                 no_of_bud_cells = 0 # this way a bud is not created for every cell
-                bud_radius = 4
+                bud_radius = (2,4)
+                r0 = randint_range(*bud_radius)
                 r1_factor = randint_range(*r1_factor_range, dtype=numpy.float)
                 new_bud = {
-                    'centerx':(x+r+bud_radius).astype(numpy.int), 
+                    'centerx':(x+r+r0).astype(numpy.int), 
                     'centery':(y).astype(numpy.int), 
-                    'radius0':(randint_range(bud_radius,bud_radius))[0],
-                    'radius1':((bud_radius * r1_factor).astype(numpy.int))[0],
+                    'radius0':r0,
+                    'radius1':((r0 * r1_factor).astype(numpy.int))[0],
                     'angle':(randint_range(0, 360))[0],
                     'white-outside': (numpy.random.rand(n) < p_white_outside)[0]}
                 for key,val in new_bud.items():
