@@ -264,20 +264,21 @@ def create_samples(n_images, n_cells_per_image=100,
 #                 cell_edge_coords = set(cell_edge_coords)
 #                 cell_edge_coords = list(cell_edge_coords)
 #                 overlap,no_of_deletions = check_cell(cell_edge_coords, overlap, no_of_deletions, list_of_cell_coords)
-            overlap,no_of_deletions = check_cell((x,y),overlap,no_of_deletions,list_of_cell_coords)
-            overlap,no_of_deletions = check_cell((x+r,y),overlap,no_of_deletions,list_of_cell_coords)
-            overlap,no_of_deletions = check_cell((x+r*2,y),overlap,no_of_deletions,list_of_cell_coords)
-            overlap,no_of_deletions = check_cell((x-r,y),overlap,no_of_deletions,list_of_cell_coords)
-            overlap,no_of_deletions = check_cell((x-r*2,y),overlap,no_of_deletions,list_of_cell_coords)
-            overlap,no_of_deletions = check_cell((x,y+r),overlap,no_of_deletions,list_of_cell_coords)
-            overlap,no_of_deletions = check_cell((x,y+r*2),overlap,no_of_deletions,list_of_cell_coords)
-            overlap,no_of_deletions = check_cell((x,y-r),overlap,no_of_deletions,list_of_cell_coords)
-            overlap,no_of_deletions = check_cell((x,y-r*2),overlap,no_of_deletions,list_of_cell_coords)
-            if overlap == False:
-                list_of_cell_coords = add_cell_coordinates_to_list(r*s,x,y,list_of_cell_coords)
-                no_of_bud_cells += 1
-            if overlap == True:
-                cells = cells.drop([i])
+            if strictness.lower() == 'none':
+                overlap,no_of_deletions = check_cell((x,y),overlap,no_of_deletions,list_of_cell_coords)
+                overlap,no_of_deletions = check_cell((x+r,y),overlap,no_of_deletions,list_of_cell_coords)
+                overlap,no_of_deletions = check_cell((x+r*2,y),overlap,no_of_deletions,list_of_cell_coords)
+                overlap,no_of_deletions = check_cell((x-r,y),overlap,no_of_deletions,list_of_cell_coords)
+                overlap,no_of_deletions = check_cell((x-r*2,y),overlap,no_of_deletions,list_of_cell_coords)
+                overlap,no_of_deletions = check_cell((x,y+r),overlap,no_of_deletions,list_of_cell_coords)
+                overlap,no_of_deletions = check_cell((x,y+r*2),overlap,no_of_deletions,list_of_cell_coords)
+                overlap,no_of_deletions = check_cell((x,y-r),overlap,no_of_deletions,list_of_cell_coords)
+                overlap,no_of_deletions = check_cell((x,y-r*2),overlap,no_of_deletions,list_of_cell_coords)
+                if overlap == False:
+                    list_of_cell_coords = add_cell_coordinates_to_list(r*s,x,y,list_of_cell_coords)
+                    no_of_bud_cells += 1
+                if overlap == True:
+                    cells = cells.drop([i])
             if bud_cells == 1 and no_of_bud_cells == cell_bud_ratio and overlap == False:
                 bud_check = 1
                 no_of_bud_cells = 0 # this way a bud is not created for every cell
