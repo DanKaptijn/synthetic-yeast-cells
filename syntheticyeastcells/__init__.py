@@ -293,7 +293,7 @@ def create_samples(n_images, n_cells_per_image=100,
                 if direction_num == 2:
                     direction_x = -r
                     direction_y = 0
-                    rx = 1
+                    rx = -1
                     ry = 0
                 if direction_num == 3:
                     direction_x = 0
@@ -304,7 +304,7 @@ def create_samples(n_images, n_cells_per_image=100,
                     direction_x = 0
                     direction_y = -r
                     rx = 0
-                    ry = 1
+                    ry = -1
                 new_bud = {
                     'centerx':(x+direction_x+(r0*rx)).astype(numpy.int), 
                     'centery':(y+direction_y+(r0*ry)).astype(numpy.int), 
