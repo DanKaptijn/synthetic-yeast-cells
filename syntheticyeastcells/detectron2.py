@@ -1,5 +1,6 @@
 import os
 from multiprocessing.pool import Pool
+from numba import cuda
 
 import cv2
 import numpy
