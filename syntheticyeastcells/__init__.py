@@ -5,6 +5,7 @@ from imgaug import augmenters as iaa
 from matplotlib import pyplot
 from math import e
 from math import sqrt
+from random import randint
 
 
 
@@ -280,12 +281,27 @@ def create_samples(n_images, n_cells_per_image=100,
             if bud_cells == 1 and no_of_bud_cells == 4 and overlap == False:
                 bud_check = 1
                 no_of_bud_cells = 0 # this way a bud is not created for every cell
-                bud_radius = (2,4)
+                bud_radius = (2,4) # controls size range of the buds
                 r0 = randint_range(*bud_radius)[0]
                 r1_factor = randint_range(*r1_factor_range, dtype=numpy.float)
+                direction_num = randint(1,4)
+                if direction_num == 1:
+                    direction_x = r
+                    direction_y = 0
+                if direction_num == 2:
+                    direction_x = -r
+                    direction_y = 0
+                if direction_num == 3:
+                    direction_x = 0
+                    direction_y = r
+                if direction_num == 4:
+                    direction_x = 0
+                    direction_y = -r
+                rx = direction_x/direction_x
+                ry = direction_y/direction_y
                 new_bud = {
-                    'centerx':(x+r+r0).astype(numpy.int), 
-                    'centery':(y).astype(numpy.int), 
+                    'centerx':(x+direction_x+(r0*rx)).astype(numpy.int), 
+                    'centery':(y+direction_y+(r0*ry)).astype(numpy.int), 
                     'radius0':r0,
                     'radius1':((r0 * r1_factor).astype(numpy.int))[0],
                     'angle':(randint_range(0, 360))[0],
