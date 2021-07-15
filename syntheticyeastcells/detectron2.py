@@ -91,9 +91,9 @@ def process_batch(destination, set_name, start, end,
        cell_bud_ratio=cell_bud_ratio)
 
     data = []
-    print("Label: ", label)
-    print("Label Type: ", type(label))
     for (i, filename), label, image in zip(left, labels, images):
+        print("Label: ", labels)
+        print("Label Type: ", type(labels))
 #         cv2.imwrite(filename, image)
         cv2.imwrite(f'{destination}{filename}', image)
         data.append(get_annotations(label))
