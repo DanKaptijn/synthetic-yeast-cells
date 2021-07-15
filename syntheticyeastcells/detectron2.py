@@ -91,6 +91,8 @@ def process_batch(destination, set_name, start, end,
        cell_bud_ratio=cell_bud_ratio)
 
     data = []
+    print("Label: ", label)
+    print("Label Type: ", type(label))
     for (i, filename), label, image in zip(left, labels, images):
 #         cv2.imwrite(filename, image)
         cv2.imwrite(f'{destination}{filename}', image)
