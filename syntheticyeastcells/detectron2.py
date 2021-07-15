@@ -39,11 +39,13 @@ def get_annotation(label):
 
 @cuda.jit(target ="cuda")
 def get_annotations(label):
+        threadsperblock = 32 
+        blockspergrid = (label.size + (threadsperblock - 1)) // threadsperblock
     return {
         'height': label.shape[0],
         'width': label.shape[1],
         'annotations': [
-            get_annotation(label == i)
+            get_annotation[blockspergrid, threadsperblock](label == i)
             for i in range(1, label.max() + 1)]}
 
 # @cuda.jit(target ="cuda")
@@ -92,11 +94,11 @@ def process_batch(destination, set_name, start, end,
 
     data = []
     for (i, filename), label, image in zip(left, labels, images):
-        print("Label: ", label)
-        print("Label Type: ", type(label))
+        threadsperblock = 32 
+        blockspergrid = (label.size + (threadsperblock - 1)) // threadsperblock
 #         cv2.imwrite(filename, image)
         cv2.imwrite(f'{destination}{filename}', image)
-        data.append(get_annotations(label))
+        data.append(get_annotations[blockspergrid, threadsperblock](label))
         data[-1]['file_name'] = filename
         data[-1]['image_id'] = f'{set}-{i:05d}'
     return data
