@@ -1,7 +1,6 @@
 import os
 from multiprocessing.pool import Pool
 from numba import cuda
-print(cuda.gpus)
 
 import cv2
 import numpy
@@ -136,6 +135,7 @@ def create_dataset(destination,
         'bud_cells': bud_cells,
         'cell_bud_ratio': cell_bud_ratio}
     progressbar = tqdm if progressbar else (lambda x: x)
+    print(cuda.gpus)
 
     results = dict()
     with Pool(njobs) as pool:
