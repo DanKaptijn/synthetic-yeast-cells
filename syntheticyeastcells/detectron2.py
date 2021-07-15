@@ -19,7 +19,7 @@ except ImportError:
     bbox_mode = 0
 from syntheticyeastcells import create_samples
 
-# @cuda.jit(target ="cuda")
+@cuda.jit(target ="cuda")
 def get_annotation(label):
     contours, _ = cv2.findContours(label.astype(numpy.uint8), cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
     if len(contours) == 0:
@@ -37,7 +37,7 @@ def get_annotation(label):
         "iscrowd": 0
     }
 
-# @cuda.jit(target ="cuda")
+@cuda.jit(target ="cuda")
 def get_annotations(label):
     return {
         'height': label.shape[0],
