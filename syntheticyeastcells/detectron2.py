@@ -39,8 +39,8 @@ def get_annotation(label):
 
 @cuda.jit(target ="cuda")
 def get_annotations(label):
-        threadsperblock = 32 
-        blockspergrid = (label.size + (threadsperblock - 1)) // threadsperblock
+    threadsperblock = 32 
+    blockspergrid = (label.size + (threadsperblock - 1)) // threadsperblock
     return {
         'height': label.shape[0],
         'width': label.shape[1],
