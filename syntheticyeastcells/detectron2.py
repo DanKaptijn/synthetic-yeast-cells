@@ -142,7 +142,6 @@ def create_dataset(destination,
     print(cuda.gpus)
 
     results = dict()
-    Pool.set_start_method('forkserver')
     with Pool(njobs) as pool:
         for set_, n in sets.items():
             results[set_] = [
