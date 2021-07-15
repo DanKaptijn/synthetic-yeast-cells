@@ -139,7 +139,6 @@ def create_dataset(destination,
         'bud_cells': bud_cells,
         'cell_bud_ratio': cell_bud_ratio}
     progressbar = tqdm if progressbar else (lambda x: x)
-    print(cuda.gpus)
 
     results = dict()
     with Pool(njobs) as pool:
