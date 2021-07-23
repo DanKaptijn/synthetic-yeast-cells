@@ -1,6 +1,5 @@
 import os
 from multiprocessing.pool import Pool
-from numba import cuda
 
 import cv2
 import numpy
@@ -19,7 +18,6 @@ except ImportError:
     bbox_mode = 0
 from syntheticyeastcells import create_samples
 
-@cuda.jit(target ="cuda")
 def get_annotation(label):
     contours, _ = cv2.findContours(label.astype(numpy.uint8), cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
     if len(contours) == 0:
@@ -37,10 +35,7 @@ def get_annotation(label):
         "iscrowd": 0
     }
 
-@cuda.jit(target ="cuda")
 def get_annotations(label):
-    threadsperblock = 32 
-    blockspergrid = (label.size + (threadsperblock - 1)) // threadsperblock
     return {
         'height': label.shape[0],
         'width': label.shape[1],
@@ -48,7 +43,6 @@ def get_annotations(label):
             get_annotation[blockspergrid, threadsperblock](label == i)
             for i in range(1, label.max() + 1)]}
 
-# @cuda.jit(target ="cuda")
 def process_batch(destination, set_name, start, end,
                   n_cells_per_image=100,
                   size=(512, 512),
@@ -94,8 +88,6 @@ def process_batch(destination, set_name, start, end,
 
     data = []
     for (i, filename), label, image in zip(left, labels, images):
-        threadsperblock = 32 
-        blockspergrid = (label.size + (threadsperblock - 1)) // threadsperblock
 #         cv2.imwrite(filename, image)
         cv2.imwrite(f'{destination}{filename}', image)
         data.append(get_annotations[blockspergrid, threadsperblock](label))
@@ -103,7 +95,6 @@ def process_batch(destination, set_name, start, end,
         data[-1]['image_id'] = f'{set}-{i:05d}'
     return data
 
-# @cuda.jit(target ="cuda")
 def create_dataset(destination,
                    sets={'test': 1000, 'train': 20000, 'val': 1000},
                    n_cells_per_image=100,
