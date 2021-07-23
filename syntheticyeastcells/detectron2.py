@@ -40,7 +40,7 @@ def get_annotations(label):
         'height': label.shape[0],
         'width': label.shape[1],
         'annotations': [
-            get_annotation[blockspergrid, threadsperblock](label == i)
+            get_annotation(label == i)
             for i in range(1, label.max() + 1)]}
 
 def process_batch(destination, set_name, start, end,
@@ -90,7 +90,7 @@ def process_batch(destination, set_name, start, end,
     for (i, filename), label, image in zip(left, labels, images):
 #         cv2.imwrite(filename, image)
         cv2.imwrite(f'{destination}{filename}', image)
-        data.append(get_annotations[blockspergrid, threadsperblock](label))
+        data.append(get_annotations(label))
         data[-1]['file_name'] = filename
         data[-1]['image_id'] = f'{set}-{i:05d}'
     return data
