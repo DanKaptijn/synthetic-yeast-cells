@@ -248,22 +248,6 @@ def create_samples(n_images, n_cells_per_image=100,
             y = cells['centery'][i]
             r = cells['radius0'][i]
             overlap = False
-#             cell_edge_coords = []
-#             for point in range(r+1):
-#                 edge_r = r*2
-#                 edge_x = point
-#                 edge_y = sqrt(edge_r**2 - edge_x**2) # pythagoras
-#                 cell_edge_coords.append((x+edge_x,round(y+edge_y)))
-#                 cell_edge_coords.append((x+edge_x,round(y-edge_y)))
-#                 cell_edge_coords.append((x-edge_x,round(y+edge_y)))
-#                 cell_edge_coords.append((x-edge_x,round(y-edge_y)))
-#                 cell_edge_coords.append((round(y+edge_y),x+edge_x))
-#                 cell_edge_coords.append((round(y-edge_y),x+edge_x))
-#                 cell_edge_coords.append((round(y+edge_y),x-edge_x))
-#                 cell_edge_coords.append((round(y-edge_y),x-edge_x))
-#                 cell_edge_coords = set(cell_edge_coords)
-#                 cell_edge_coords = list(cell_edge_coords)
-#                 overlap,no_of_deletions = check_cell(cell_edge_coords, overlap, no_of_deletions, list_of_cell_coords)
             if strictness.lower() != 'none':
                 overlap,no_of_deletions = check_cell((x,y),overlap,no_of_deletions,list_of_cell_coords)
                 overlap,no_of_deletions = check_cell((x+r,y),overlap,no_of_deletions,list_of_cell_coords)
@@ -291,21 +275,37 @@ def create_samples(n_images, n_cells_per_image=100,
                     direction_y = 0
                     rx = 1
                     ry = 0
+                    offset = randint(-r,r)
+                    if offset != 0:
+                        direction_y += offset
+                        direction_x -= 0.5*(r0)
                 if direction_num == 2:
                     direction_x = -r
                     direction_y = 0
                     rx = -1
                     ry = 0
+                    offset = randint(-r,r)
+                    if offset != 0:
+                        direction_y += offset
+                        direction_x += 0.5*(r0)
                 if direction_num == 3:
                     direction_x = 0
                     direction_y = r
                     rx = 0
                     ry = 1
+                    offset = randint(-r,r)
+                    if offset != 0:
+                        direction_x += offset
+                        direction_y -= 0.5*(r0)
                 if direction_num == 4:
                     direction_x = 0
                     direction_y = -r
                     rx = 0
                     ry = -1
+                    offset = randint(-r,r)
+                    if offset != 0:
+                        direction_x += offset
+                        direction_y += 0.5*(r0)
                 new_bud = {
                     'centerx':(x+direction_x+(r0*rx)).astype(numpy.int), 
                     'centery':(y+direction_y+(r0*ry)).astype(numpy.int), 
