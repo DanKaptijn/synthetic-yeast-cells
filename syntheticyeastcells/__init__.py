@@ -165,7 +165,7 @@ def create_sample(size, cells,
         a = cv2.ellipse(a, (x, y), (r0 - 1, r1 - 1), angle, 0, 360, 1., -1)
         b = cv2.ellipse(b, (x, y), (r0 + 2, r1 + 2), angle, 0, 360, 1., -1)
         c = cv2.ellipse(
-                cores, (x, y), (round(r0/2), r1), angle,
+                cores, (x, y), (round(r0*10), r1), angle,
                 0, 360, -1
             )
 
