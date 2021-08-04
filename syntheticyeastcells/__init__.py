@@ -167,7 +167,7 @@ def create_sample(size, cells,
         a = cv2.ellipse(a, (x, y), (r0 - 1, r1 - 1), angle, 0, 360, 1., -1)
         b = cv2.ellipse(b, (x, y), (r0 + 2, r1 + 2), angle, 0, 360, 1., -1)
         c = cv2.ellipse(
-                c, (x, y), (round(r0/2),round(r0/2)), angle, 0, 360, label, -1
+                c, (x, y), (round(r0/2),round(r0/2)), angle, 0, 360, label, 5
             )
 
     for label, (_, cell) in enumerate(cells.iterrows()):
@@ -193,8 +193,8 @@ def create_sample(size, cells,
 
     cells = outer - inner
     cells -= cells.min(); cells /= cells.max()  # scale between 0 and 1
-    return background + 0.5 * cells - 0.25, cores
-    #return background + 0.5 * cells - 0.25 + c, cores
+    #return background + 0.5 * cells - 0.25, cores
+    return background + 0.5 * cells - 0.25 + c, cores
 
 
 def create_samples(n_images, n_cells_per_image=100,
