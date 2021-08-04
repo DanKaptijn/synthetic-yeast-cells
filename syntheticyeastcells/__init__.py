@@ -165,8 +165,8 @@ def create_sample(size, cells,
         a, b = (inner, outer) if white_outside else (outer, inner)
         a = cv2.ellipse(a, (x, y), (r0 - 1, r1 - 1), angle, 0, 360, 1., -1)
         b = cv2.ellipse(b, (x, y), (r0 + 2, r1 + 2), angle, 0, 360, 1., -1)
-        c = cv2.circle(
-                c, (x, y), (round(r0*10)), (100, 100, 100), -1
+        c = cv2.ellipse(
+                c, (x, y), (round(r0/2),r1), angle, 0, 360, (100, 100, 100), -1
             )
 
     for label, (_, cell) in enumerate(cells.iterrows()):
