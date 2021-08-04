@@ -156,19 +156,18 @@ def create_sample(size, cells,
     outer = numpy.zeros(size)
 
     def draw_cell(x, y, r0, r1, angle, white_outside, label):
-        for i in range(2):            
-            if i == 0:
-                r0 = r0                
-            if i == 1:
-                r0 = round(r0/2)
-            nonlocal cores, inner, outer
-            cores = cv2.ellipse(
-                    cores, (x, y), (r0, r1), angle,
-                    0, 360, label, -1
-                )
-            a, b = (inner, outer) if white_outside else (outer, inner)
-            a = cv2.ellipse(a, (x, y), (r0 - 1, r1 - 1), angle, 0, 360, 1., -1)
-            b = cv2.ellipse(b, (x, y), (r0 + 2, r1 + 2), angle, 0, 360, 1., -1)
+        nonlocal cores, inner, outer
+        cores = cv2.ellipse(
+                cores, (x, y), (r0, r1), angle,
+                0, 360, label, -1
+            )
+        a, b = (inner, outer) if white_outside else (outer, inner)
+        a = cv2.ellipse(a, (x, y), (r0 - 1, r1 - 1), angle, 0, 360, 1., -1)
+        b = cv2.ellipse(b, (x, y), (r0 + 2, r1 + 2), angle, 0, 360, 1., -1)
+        c = cv2.ellipse(
+                cores, (x, y), (round(r0/2), r1), angle,
+                0, 360, -1
+            )
 
     for label, (_, cell) in enumerate(cells.iterrows()):
         draw_cell(*cell[['centerx', 'centery', 'radius0', 'radius1', 'angle', 'white-outside']].values, label)
