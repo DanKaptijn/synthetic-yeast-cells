@@ -137,7 +137,7 @@ def create_background(cores,
 #     print("background max = ", max(background[0]))
     cores = (cores > 0)
     a, b, z = background_contrast, core_contrast, background_intensity
-    background = numpy.clip(z + (a + (b-a) * cores + (b*c)) * background, 0, 1)
+    background = numpy.clip(z + (a + (b-a) * cores - (b*c)) * background, 0, 1)
 #     background = numpy.clip(1/ (1 + e**(-k*((z + (a + (b-a) * cores) * background)-x0)) ), 0, 1)
     return background
 
@@ -171,7 +171,7 @@ def create_sample(size, cells,
                 c, (x, y), (round(r0/2),round(r0/2)), angle, 0, 360, label, -1
             )
         d = cv2.ellipse(
-                d, (x, y), (round(r0/2),round(r0/2)), angle, 0, 360, (110,110,110), 1
+                d, (x, y), (round(r0/2),round(r0/2)), angle, 0, 360, (110,110,110), -1
             )
 
     for label, (_, cell) in enumerate(cells.iterrows()):
