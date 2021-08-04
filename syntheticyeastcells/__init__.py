@@ -159,7 +159,7 @@ def create_sample(size, cells,
     d = numpy.zeros(size)
 
     def draw_cell(x, y, r0, r1, angle, white_outside, label):
-        nonlocal cores, inner, outer, c
+        nonlocal cores, inner, outer, c, d
         cores = cv2.ellipse(
                 cores, (x, y), (r0, r1), angle,
                 0, 360, label, -1
