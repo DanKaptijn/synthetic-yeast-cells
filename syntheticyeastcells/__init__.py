@@ -155,7 +155,8 @@ def create_sample(size, cells,
     cores = numpy.zeros(size)
     inner = numpy.zeros(size)
     outer = numpy.zeros(size)
-    c = numpy.zeros(size)
+    c = numpy.zeros(size)    
+    d = numpy.zeros(size)
 
     def draw_cell(x, y, r0, r1, angle, white_outside, label):
         nonlocal cores, inner, outer, c
@@ -167,6 +168,9 @@ def create_sample(size, cells,
         a = cv2.ellipse(a, (x, y), (r0 - 1, r1 - 1), angle, 0, 360, 1., -1)
         b = cv2.ellipse(b, (x, y), (r0 + 2, r1 + 2), angle, 0, 360, 1., -1)
         c = cv2.ellipse(
+                c, (x, y), (round(r0/2),round(r0/2)), angle, 0, 360, label, -1
+            )
+        d = cv2.ellipse(
                 c, (x, y), (round(r0/2),round(r0/2)), angle, 0, 360, label, 1
             )
 
@@ -194,7 +198,7 @@ def create_sample(size, cells,
     cells = outer - inner
     cells -= cells.min(); cells /= cells.max()  # scale between 0 and 1
     #return background + 0.5 * cells - 0.25, cores
-    return background + 0.5 * cells - 0.25 + c, cores
+    return background + 0.5 * cells - 0.25 + d, cores
 
 
 def create_samples(n_images, n_cells_per_image=100,
