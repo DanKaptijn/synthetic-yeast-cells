@@ -118,6 +118,7 @@ def random_cells(n, size=(512, 512),
     })
 
 def create_background(cores,
+                      c,
                       spatial_blur_std=1.5,
                       background_intensity=0.4,
                       background_contrast=0.00188,
@@ -136,7 +137,7 @@ def create_background(cores,
 #     print("background max = ", max(background[0]))
     cores = (cores > 0)
     a, b, z = background_contrast, core_contrast, background_intensity
-    background = numpy.clip(z + (a + (b-a) * cores) * background, 0, 1)
+    background = numpy.clip(z + (a + (b-a) * (cores-c)) * background, 0, 1)
 #     background = numpy.clip(1/ (1 + e**(-k*((z + (a + (b-a) * cores) * background)-x0)) ), 0, 1)
     return background
 
@@ -166,7 +167,7 @@ def create_sample(size, cells,
         a = cv2.ellipse(a, (x, y), (r0 - 1, r1 - 1), angle, 0, 360, 1., -1)
         b = cv2.ellipse(b, (x, y), (r0 + 2, r1 + 2), angle, 0, 360, 1., -1)
         c = cv2.ellipse(
-                c, (x, y), (round(r0/2),round(r0/2)), angle, 0, 360, (118, 118, 118), -1
+                c, (x, y), (round(r0/2),round(r0/2)), angle, 0, 360, label, -1
             )
 
     for label, (_, cell) in enumerate(cells.iterrows()):
@@ -177,6 +178,7 @@ def create_sample(size, cells,
         im[:] = aug.augment_images([im])[0]
 
     background = create_background(cores,
+                                   c,
                                    spatial_blur_std=spatial_blur_std,
                                    background_intensity=background_intensity,
                                    background_contrast=background_contrast,
@@ -191,7 +193,8 @@ def create_sample(size, cells,
 
     cells = outer - inner
     cells -= cells.min(); cells /= cells.max()  # scale between 0 and 1
-    return background + 0.5 * cells - 0.25 + c, cores
+    return background + 0.5 * cells - 0.25, cores
+    #return background + 0.5 * cells - 0.25 + c, cores
 
 
 def create_samples(n_images, n_cells_per_image=100,
