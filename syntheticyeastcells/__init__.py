@@ -171,7 +171,7 @@ def create_sample(size, cells,
                 c, (x, y), (round(r0/2),round(r0/2)), angle, 0, 360, label, -1
             )
         d = cv2.ellipse(
-                c, (x, y), (round(r0/2),round(r0/2)), angle, 0, 360, label, 1
+                d, (x, y), (round(r0/2),round(r0/2)), angle, 0, 360, label, 1
             )
 
     for label, (_, cell) in enumerate(cells.iterrows()):
