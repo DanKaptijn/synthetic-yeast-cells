@@ -165,7 +165,7 @@ def create_sample(size, cells,
                 )
             if i == 1:
                 cores = cv2.ellipse(
-                    cores, (x, y), (r0, r1), angle,
+                    cores, (x, y), (r0/2, r1), angle,
                     0, 360, -1
                 )
             a, b = (inner, outer) if white_outside else (outer, inner)
