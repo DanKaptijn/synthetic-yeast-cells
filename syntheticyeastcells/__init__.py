@@ -185,7 +185,7 @@ def create_sample(size, cells,
         draw_cell(*cell[['centerx', 'centery', 'radius0', 'radius1', 'angle', 'white-outside']].values, label)
 
     aug = augmenter.to_deterministic()
-    if c != 0:
+    if type(c) != int:
         for im in [inner, outer, cores, c, d]:
             im[:] = aug.augment_images([im])[0]
     else:
@@ -208,7 +208,7 @@ def create_sample(size, cells,
 
     cells = outer - inner
     cells -= cells.min(); cells /= cells.max()  # scale between 0 and 1
-    if d!= 0:
+    if type(d) != int:
         d -= d.min(); d /= (d.max())*5 # scale lower to make edges of vacuoles grey-scale
         cells = cells - d
     return background + 0.5 * cells - 0.25, cores
