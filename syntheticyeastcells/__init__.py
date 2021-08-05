@@ -171,9 +171,11 @@ def create_sample(size, cells,
         c = cv2.ellipse(
                 c, (x, y), (round(r0/vacuole_size),round(r0/vacuole_size)), angle, 0, 360, label, -1
             )
-        d = cv2.ellipse(
-                d, (x, y), (round(r0/vacuole_size),round(r0/vacuole_size)), angle, 0, 360, (110,110,110), 2
-            )
+        vac = randint(1,10) # variable to decide whether to create a vacuole
+        if vac == 1:
+            d = cv2.ellipse(
+                    d, (x, y), (round(r0/vacuole_size),round(r0/vacuole_size)), angle, 0, 360, (110,110,110), 2
+                )
 
     for label, (_, cell) in enumerate(cells.iterrows()):
         draw_cell(*cell[['centerx', 'centery', 'radius0', 'radius1', 'angle', 'white-outside']].values, label)
