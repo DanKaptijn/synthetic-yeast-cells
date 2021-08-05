@@ -161,8 +161,8 @@ def create_sample(size, cells,
     c = numpy.zeros(size)    
     d = numpy.zeros(size)
 
-    def draw_cell(x, y, r0, r1, angle, white_outside, label):
-        nonlocal cores, inner, outer, c, d, add_vac, vacuole_size
+    def draw_cell(x, y, r0, r1, angle, white_outside, label, add_vac, vacuole_size):
+        nonlocal cores, inner, outer, c, d
         cores = cv2.ellipse(
                 cores, (x, y), (r0, r1), angle,
                 0, 360, label, -1
@@ -170,22 +170,22 @@ def create_sample(size, cells,
         a, b = (inner, outer) if white_outside else (outer, inner)
         a = cv2.ellipse(a, (x, y), (r0 - 1, r1 - 1), angle, 0, 360, 1., -1)
         b = cv2.ellipse(b, (x, y), (r0 + 2, r1 + 2), angle, 0, 360, 1., -1)
-        c = cv2.ellipse(
-                c, (x, y), (round(r0/vacuole_size),round(r0/vacuole_size)), angle, 0, 360, label, -1
-            )
-        d = cv2.ellipse(
-                d, (x, y), (round(r0/vacuole_size),round(r0/vacuole_size)), angle, 0, 360, (110,110,110), 2
-            )
+        if add_vac == True:
+            c = cv2.ellipse(
+                    c, (x, y), (round(r0/vacuole_size),round(r0/vacuole_size)), angle, 0, 360, label, -1
+                )
+            d = cv2.ellipse(
+                    d, (x, y), (round(r0/vacuole_size),round(r0/vacuole_size)), angle, 0, 360, (110,110,110), 2
+                )
 
     for label, (_, cell) in enumerate(cells.iterrows()):
-        print(label)
         vacuole_size = randint(2,5)
         add_vac = randint(1,2) # variable to decide whether to create a vacuole
         if add_vac == 1:
             add_vac = True
         if add_vac != 1:
             add_vac = False        
-        draw_cell(*cell[['centerx', 'centery', 'radius0', 'radius1', 'angle', 'white-outside']].values, label)
+        draw_cell(*cell[['centerx', 'centery', 'radius0', 'radius1', 'angle', 'white-outside']].values, label, add_vac, vacuole_size)
 
     aug = augmenter.to_deterministic()
     for im in [inner, outer, cores, c, d]:
@@ -208,9 +208,8 @@ def create_sample(size, cells,
 
     cells = outer - inner
     cells -= cells.min(); cells /= cells.max()  # scale between 0 and 1
-    if add_vac == True:
-        d -= d.min(); d /= (d.max())*5 # scale lower to make edges of vacuoles grey-scale
-        cells = cells - d
+    d -= d.min(); d /= (d.max())*5 # scale lower to make edges of vacuoles grey-scale
+    cells = cells - d
     return background + 0.5 * cells - 0.25, cores
 
 
