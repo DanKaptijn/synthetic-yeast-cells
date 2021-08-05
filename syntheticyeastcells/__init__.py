@@ -176,6 +176,9 @@ def create_sample(size, cells,
             d = cv2.ellipse(
                     d, (x, y), (round(r0/vacuole_size),round(r0/vacuole_size)), angle, 0, 360, (110,110,110), 2
                 )
+        else:
+            c = 0
+            d = 0
 
     for label, (_, cell) in enumerate(cells.iterrows()):
         draw_cell(*cell[['centerx', 'centery', 'radius0', 'radius1', 'angle', 'white-outside']].values, label)
@@ -200,7 +203,8 @@ def create_sample(size, cells,
 
     cells = outer - inner
     cells -= cells.min(); cells /= cells.max()  # scale between 0 and 1
-    d -= d.min(); d /= (d.max())*5 # scale lower to make edges of vacuoles grey-scale
+    if d!= 0:
+        d -= d.min(); d /= (d.max())*5 # scale lower to make edges of vacuoles grey-scale
     cells = cells - d
     #return background + 0.5 * cells - 0.25, cores
     return background + 0.5 * cells - 0.25, cores
