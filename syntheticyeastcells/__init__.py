@@ -184,8 +184,12 @@ def create_sample(size, cells,
         draw_cell(*cell[['centerx', 'centery', 'radius0', 'radius1', 'angle', 'white-outside']].values, label)
 
     aug = augmenter.to_deterministic()
-    for im in [inner, outer, cores, c, d]:
-        im[:] = aug.augment_images([im])[0]
+    if c != 0:
+        for im in [inner, outer, cores, c, d]:
+            im[:] = aug.augment_images([im])[0]
+    else:
+        for im in [inner, outer, cores]:
+            im[:] = aug.augment_images([im])[0]        
 
     background = create_background(cores,
                                    c,
