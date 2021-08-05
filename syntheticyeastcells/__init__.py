@@ -289,8 +289,6 @@ def create_samples(n_images, n_cells_per_image=100,
                 if overlap == False:
                     list_of_cell_coords = add_cell_coordinates_to_list(r*s,x,y,list_of_cell_coords)
                     no_of_bud_cells += 1
-                if overlap == True:
-                    cells = cells.drop([i])
             if bud_cells == 1 and no_of_bud_cells == cell_bud_ratio and overlap == False:
                 bud_check = 1
                 no_of_bud_cells = 0 # this way a bud is not created for every cell
@@ -342,7 +340,9 @@ def create_samples(n_images, n_cells_per_image=100,
                     'angle':(randint_range(0, 360))[0],
                     'white-outside': (numpy.random.rand(n) < p_white_outside)[0]}
                 for key,val in new_bud.items():
-                    new_cells[key].append(new_bud[key])
+                    new_cells[key].append(new_bud[key])        
+        if overlap == True:
+            cells = cells.drop([i])
         if bud_check == 1:
             new_cells = pandas.DataFrame(new_cells)
             cells = cells.append(new_cells, ignore_index=True)
