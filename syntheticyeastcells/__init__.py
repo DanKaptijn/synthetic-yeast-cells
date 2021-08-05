@@ -197,8 +197,8 @@ def create_sample(size, cells,
         im[:] = im / im.max()
 
     cells = outer - inner
-    cells = cells - d
     cells -= cells.min(); cells /= cells.max()  # scale between 0 and 1
+    cells = cells - d
     #return background + 0.5 * cells - 0.25, cores
     return background + 0.5 * cells - 0.25, cores
 
