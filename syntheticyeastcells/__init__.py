@@ -170,6 +170,8 @@ def create_sample(size, cells,
         a, b = (inner, outer) if white_outside else (outer, inner)
         a = cv2.ellipse(a, (x, y), (r0 - 1, r1 - 1), angle, 0, 360, 1., -1)
         b = cv2.ellipse(b, (x, y), (r0 + 2, r1 + 2), angle, 0, 360, 1., -1)
+        if r0 < 9:
+            add_vac = False
         if add_vac == True:
             c = cv2.ellipse(
                     c, (x, y), (round(r0/vacuole_size),round(r0/vacuole_size)), angle, 0, 360, label, -1
