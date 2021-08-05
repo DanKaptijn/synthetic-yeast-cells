@@ -137,7 +137,7 @@ def create_background(cores,
 #     print("background max = ", max(background[0]))
     cores = (cores > 0)
     a, b, z = background_contrast, core_contrast, background_intensity
-    background = numpy.clip(z + (a + (b-a) * cores - (b*c)) * background, 0, 1)
+    background = numpy.clip(z + ((a + (b-a) * cores) / 1*(1*c)) * background, 0, 1)
 #     background = numpy.clip(1/ (1 + e**(-k*((z + (a + (b-a) * cores) * background)-x0)) ), 0, 1)
     return background
 
