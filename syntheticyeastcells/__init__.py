@@ -270,7 +270,8 @@ def create_samples(n_images, n_cells_per_image=100,
         if strictness == 'high':
             s=3
         for i in cells.index:
-            print(cells[i])
+            print(type(cells))
+            print(cells.iloc[i,:])
             x = cells['centerx'][i]
             y = cells['centery'][i]
             r = cells['radius0'][i]
