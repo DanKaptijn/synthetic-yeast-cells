@@ -344,7 +344,7 @@ def create_samples(n_images, n_cells_per_image=100,
                     'white-outside': (numpy.random.rand(n) < p_white_outside)[0]}
                 for key,val in new_bud.items():
                     new_cells[key].append(new_bud[key])        
-        if overlap == True:
+        if len(overlap_list) > 0:
             for i in overlap_list:
                 cells = cells.drop([i])
         if bud_check == 1:
