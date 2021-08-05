@@ -172,7 +172,7 @@ def create_sample(size, cells,
         a = cv2.ellipse(a, (x, y), (r0 - 1, r1 - 1), angle, 0, 360, 1., -1)
         b = cv2.ellipse(b, (x, y), (r0 + 2, r1 + 2), angle, 0, 360, 1., -1)
         vacuole_size = randint(2,5)
-        add_vac = randint(1,10) # variable to decide whether to create a vacuole
+        add_vac = randint(1,2) # variable to decide whether to create a vacuole
         add_vac = 1
         if add_vac == 1:
             add_vac = True
@@ -271,8 +271,6 @@ def create_samples(n_images, n_cells_per_image=100,
         if strictness == 'high':
             s=3
         for i in cells.index:
-            print(type(cells))
-            print(cells.iloc[i,:])
             x = cells['centerx'][i]
             y = cells['centery'][i]
             r = cells['radius0'][i]
