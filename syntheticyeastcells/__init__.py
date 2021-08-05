@@ -119,6 +119,7 @@ def random_cells(n, size=(512, 512),
 
 def create_background(cores,
                       c,
+                      vac,
                       spatial_blur_std=1.5,
                       background_intensity=0.4,
                       background_contrast=0.00188,
@@ -137,6 +138,8 @@ def create_background(cores,
 #     print("background max = ", max(background[0]))
     cores = (cores > 0)
     a, b, z = background_contrast, core_contrast, background_intensity
+    if vac == False:
+        c = 0
     background = numpy.clip(z + ((a + (b-a) * cores) - (b*c)) * background, 0, 1)
 #     background = numpy.clip(1/ (1 + e**(-k*((z + (a + (b-a) * cores) * background)-x0)) ), 0, 1)
     return background
@@ -171,29 +174,26 @@ def create_sample(size, cells,
         add_vac = randint(1,10) # variable to decide whether to create a vacuole
         add_vac = 1
         if add_vac == 1:
-            c = cv2.ellipse(
-                    c, (x, y), (round(r0/vacuole_size),round(r0/vacuole_size)), angle, 0, 360, label, -1
-                )
-            d = cv2.ellipse(
-                    d, (x, y), (round(r0/vacuole_size),round(r0/vacuole_size)), angle, 0, 360, (110,110,110), 2
-                )
+            add_vac = True
         if add_vac != 1:
-            c = 0
-            d = 0
+            add_vac = False
+        c = cv2.ellipse(
+                c, (x, y), (round(r0/vacuole_size),round(r0/vacuole_size)), angle, 0, 360, label, -1
+            )
+        d = cv2.ellipse(
+                d, (x, y), (round(r0/vacuole_size),round(r0/vacuole_size)), angle, 0, 360, (110,110,110), 2
+            )
 
     for label, (_, cell) in enumerate(cells.iterrows()):
         draw_cell(*cell[['centerx', 'centery', 'radius0', 'radius1', 'angle', 'white-outside']].values, label)
 
     aug = augmenter.to_deterministic()
-    if type(c) != int:
-        for im in [inner, outer, cores, c, d]:
-            im[:] = aug.augment_images([im])[0]
-    if type(c) == int:
-        for im in [inner, outer, cores]:
-            im[:] = aug.augment_images([im])[0]        
+    for im in [inner, outer, cores, c, d]:
+        im[:] = aug.augment_images([im])[0]       
 
     background = create_background(cores,
                                    c,
+                                   add_vac,
                                    spatial_blur_std=spatial_blur_std,
                                    background_intensity=background_intensity,
                                    background_contrast=background_contrast,
@@ -208,7 +208,7 @@ def create_sample(size, cells,
 
     cells = outer - inner
     cells -= cells.min(); cells /= cells.max()  # scale between 0 and 1
-    if type(d) != int:
+    if add_vac == True:
         d -= d.min(); d /= (d.max())*5 # scale lower to make edges of vacuoles grey-scale
         cells = cells - d
     return background + 0.5 * cells - 0.25, cores
