@@ -178,6 +178,7 @@ def create_sample(size, cells,
             )
 
     for label, (_, cell) in enumerate(cells.iterrows()):
+        print(label)
         vacuole_size = randint(2,5)
         add_vac = randint(1,2) # variable to decide whether to create a vacuole
         if add_vac == 1:
