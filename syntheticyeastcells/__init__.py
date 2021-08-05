@@ -253,6 +253,7 @@ def create_samples(n_images, n_cells_per_image=100,
     
         ### Dan Code
         list_of_cell_coords = []
+        overlap_list = []
         no_of_deletions = 0
         no_of_bud_cells = 0
         bud_check = 0
@@ -289,6 +290,8 @@ def create_samples(n_images, n_cells_per_image=100,
                 if overlap == False:
                     list_of_cell_coords = add_cell_coordinates_to_list(r*s,x,y,list_of_cell_coords)
                     no_of_bud_cells += 1
+                if overlap == True:
+                    overlap_list.append(i)
             if bud_cells == 1 and no_of_bud_cells == cell_bud_ratio and overlap == False:
                 bud_check = 1
                 no_of_bud_cells = 0 # this way a bud is not created for every cell
@@ -342,7 +345,8 @@ def create_samples(n_images, n_cells_per_image=100,
                 for key,val in new_bud.items():
                     new_cells[key].append(new_bud[key])        
         if overlap == True:
-            cells = cells.drop([i])
+            for i in overlap_list:
+                cells = cells.drop([i])
         if bud_check == 1:
             new_cells = pandas.DataFrame(new_cells)
             cells = cells.append(new_cells, ignore_index=True)
