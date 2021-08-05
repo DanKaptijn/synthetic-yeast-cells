@@ -160,10 +160,9 @@ def create_sample(size, cells,
     outer = numpy.zeros(size)
     c = numpy.zeros(size)    
     d = numpy.zeros(size)
-    add_vac = False
 
     def draw_cell(x, y, r0, r1, angle, white_outside, label):
-        nonlocal cores, inner, outer, c, d, add_vac
+        nonlocal cores, inner, outer, c, d, add_vac, vacuole_size
         cores = cv2.ellipse(
                 cores, (x, y), (r0, r1), angle,
                 0, 360, label, -1
@@ -171,12 +170,6 @@ def create_sample(size, cells,
         a, b = (inner, outer) if white_outside else (outer, inner)
         a = cv2.ellipse(a, (x, y), (r0 - 1, r1 - 1), angle, 0, 360, 1., -1)
         b = cv2.ellipse(b, (x, y), (r0 + 2, r1 + 2), angle, 0, 360, 1., -1)
-        vacuole_size = randint(2,5)
-        add_vac = randint(1,2) # variable to decide whether to create a vacuole
-        if add_vac == 1:
-            add_vac = True
-        if add_vac != 1:
-            add_vac = False
         c = cv2.ellipse(
                 c, (x, y), (round(r0/vacuole_size),round(r0/vacuole_size)), angle, 0, 360, label, -1
             )
@@ -185,6 +178,12 @@ def create_sample(size, cells,
             )
 
     for label, (_, cell) in enumerate(cells.iterrows()):
+        vacuole_size = randint(2,5)
+        add_vac = randint(1,2) # variable to decide whether to create a vacuole
+        if add_vac == 1:
+            add_vac = True
+        if add_vac != 1:
+            add_vac = False        
         draw_cell(*cell[['centerx', 'centery', 'radius0', 'radius1', 'angle', 'white-outside']].values, label)
 
     aug = augmenter.to_deterministic()
