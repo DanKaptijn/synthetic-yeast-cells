@@ -177,7 +177,7 @@ def create_sample(size, cells,
             d = cv2.ellipse(
                     d, (x, y), (round(r0/vacuole_size),round(r0/vacuole_size)), angle, 0, 360, (110,110,110), 2
                 )
-        else:
+        if vac != 1:
             c = 0
             d = 0
 
@@ -188,7 +188,7 @@ def create_sample(size, cells,
     if type(c) != int:
         for im in [inner, outer, cores, c, d]:
             im[:] = aug.augment_images([im])[0]
-    else:
+    if type(c) == int:
         for im in [inner, outer, cores]:
             im[:] = aug.augment_images([im])[0]        
 
