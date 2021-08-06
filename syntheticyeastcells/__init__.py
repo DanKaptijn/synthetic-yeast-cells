@@ -169,7 +169,8 @@ def create_sample(size, cells,
         if add_vac == True:
             x1 = randint(0,1)
             y1 = 1-x1
-            direct = [-1,1][x1]
+            k = randint(0,1)
+            direct = [-1,1][k]
             m = vacuole_size
             x_adj = m*direct*x1
             y_adj = m*direct*y1
