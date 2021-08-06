@@ -12,11 +12,9 @@ from random import randint
 ### Dan func
 def check_cell(t, overlap, n, l):
     if overlap == False:
-#         for coord in t:
         if t in l: # l is a list containing all coordinates of cells per image
             n += 1 # n is used to keep a track of how many cells get deleted per image
             overlap = True # overlap tells the code to delete the cell when True
-#             break
             
     return overlap, n
 
@@ -169,11 +167,17 @@ def create_sample(size, cells,
         if r0 < 9:
             add_vac = False
         if add_vac == True:
+            x1 = randint(0,1)
+            y1 = 1-x1
+            direct = [-1,1][x1]
+            m = vacuole_size
+            x_adj = m*direct*x1
+            y_adj = m*direct*y1
             c = cv2.ellipse(
-                    c, (x, y), (round(r0/vacuole_size),round(r0/vacuole_size)), angle, 0, 360, label, -1
+                    c, (x+x_adj, y+y_adj), (round(r0/vacuole_size),round(r0/vacuole_size)), angle, 0, 360, label, -1
                 )
             d = cv2.ellipse(
-                    d, (x, y), (round(r0/vacuole_size),round(r0/vacuole_size)), angle, 0, 360, (110,110,110), 2
+                    d, (x+x_adj, y+y_adj), (round(r0/vacuole_size),round(r0/vacuole_size)), angle, 0, 360, (110,110,110), 2
                 )
 
     for label, (_, cell) in enumerate(cells.iterrows()):
