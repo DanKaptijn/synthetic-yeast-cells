@@ -214,7 +214,7 @@ def create_sample(size, cells,
     cells = outer - inner
     cells -= cells.min(); cells /= cells.max()  # scale between 0 and 1
     d -= d.min(); d /= (d.max())*4 # scale lower to make edges of vacuoles grey-scale
-    cells = cells - d
+    cells = cells + d
     return background + 0.5 * cells - 0.25, cores
 
 
