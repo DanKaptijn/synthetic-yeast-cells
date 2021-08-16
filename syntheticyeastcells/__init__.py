@@ -181,7 +181,7 @@ def create_sample(size, cells,
                     c, (x+x_adj, y+y_adj), (round(r0/vacuole_size),round(r0/vacuole_size)), angle, 0, 360, vac_contrast, -1
                 )
             d = cv2.ellipse(
-                    d, (x+x_adj, y+y_adj), (round(r0/vacuole_size),round(r0/vacuole_size)), angle, 0, 360, (90,90,90), 8
+                    d, (x+x_adj, y+y_adj), (round(r0/vacuole_size),round(r0/vacuole_size)), angle, 0, 360, (50,50,50), 8
                 )
 
     for label, (_, cell) in enumerate(cells.iterrows()):
@@ -213,7 +213,7 @@ def create_sample(size, cells,
 
     cells = outer - inner
     cells -= cells.min(); cells /= cells.max()  # scale between 0 and 1
-    d -= d.min(); d /= (d.max())*6 # scale lower to make edges of vacuoles grey-scale
+    d -= d.min(); d /= (d.max())*4 # scale lower to make edges of vacuoles grey-scale
     cells = cells - d
     return background + 0.5 * cells - 0.25, cores
 
