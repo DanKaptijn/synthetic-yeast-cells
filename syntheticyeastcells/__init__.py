@@ -136,7 +136,7 @@ def create_background(cores,
     cores = (cores > 0)
     a, b, z = background_contrast, core_contrast, background_intensity
 #     background = numpy.clip(z + (a + (b-a) * cores) * background, 0, 1)
-    background = numpy.clip(1/ (1 + e**(-k*((z + (a + (b-a) * (cores*(1-c)) ) * background)-x0)) ), 0, 1)
+    background = numpy.clip(1/ (1 + e**(-k*((z + (a + (b-a) * cores ) * background)-x0)) ), 0, 1)
 #     background = numpy.clip(1/ (1 + e**(-k*(((z + (a + (b-a) * c ) + (z + (a + (b-a) * cores ))) * background)-x0)) ), 0, 1)
     return background
 
@@ -181,7 +181,7 @@ def create_sample(size, cells,
                     c, (x+x_adj, y+y_adj), (round(r0/vacuole_size),round(r0/vacuole_size)), angle, 0, 360, vac_contrast, -1
                 )
             d = cv2.ellipse(
-                    d, (x+x_adj, y+y_adj), (round(r0/vacuole_size),round(r0/vacuole_size)), angle, 0, 360, (110,110,110), 8
+                    d, (x+x_adj, y+y_adj), (round(r0/vacuole_size),round(r0/vacuole_size)), angle, 0, 360, (150,150,150), 8
                 )
 
     for label, (_, cell) in enumerate(cells.iterrows()):
@@ -213,7 +213,7 @@ def create_sample(size, cells,
 
     cells = outer - inner
     cells -= cells.min(); cells /= cells.max()  # scale between 0 and 1
-    d -= d.min(); d /= (d.max())*10 # scale lower to make edges of vacuoles grey-scale
+    d -= d.min(); d /= (d.max())*3 # scale lower to make edges of vacuoles grey-scale
     cells = cells - d
     return background + 0.5 * cells - 0.25, cores
 
