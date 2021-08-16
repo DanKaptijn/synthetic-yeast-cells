@@ -177,7 +177,7 @@ def create_sample(size, cells,
             x_adj = m*direct*x1
             y_adj = m*direct*y1
             c = cv2.ellipse(
-                    c, (x+x_adj, y+y_adj), (round(r0/vacuole_size),round(r0/vacuole_size)), angle, 0, 360, 0.5, -1
+                    c, (x+x_adj, y+y_adj), (round(r0/vacuole_size),round(r0/vacuole_size)), angle, 0, 360, 1, -1
                 )
             d = cv2.ellipse(
                     d, (x+x_adj, y+y_adj), (round(r0/vacuole_size),round(r0/vacuole_size)), angle, 0, 360, (110,110,110), 2
