@@ -146,6 +146,7 @@ def create_sample(size, cells,
                   background_intensity=0.4,
                   background_contrast=0.01,
                   core_contrast=0.15,
+                  vac_contrast=1,
                   k=1,
                   x0=0,
                   augmenter=seperate_augmentations,
@@ -158,7 +159,7 @@ def create_sample(size, cells,
     d = numpy.zeros(size)
 
     def draw_cell(x, y, r0, r1, angle, white_outside, label, add_vac, vacuole_size):
-        nonlocal cores, inner, outer, c, d
+        nonlocal cores, inner, outer, c, d, vac_contrast
         cores = cv2.ellipse(
                 cores, (x, y), (r0, r1), angle,
                 0, 360, label, -1
@@ -177,7 +178,7 @@ def create_sample(size, cells,
             x_adj = m*direct*x1
             y_adj = m*direct*y1
             c = cv2.ellipse(
-                    c, (x+x_adj, y+y_adj), (round(r0/vacuole_size),round(r0/vacuole_size)), angle, 0, 360, 10, -1
+                    c, (x+x_adj, y+y_adj), (round(r0/vacuole_size),round(r0/vacuole_size)), angle, 0, 360, vac_contrast, -1
                 )
             d = cv2.ellipse(
                     d, (x+x_adj, y+y_adj), (round(r0/vacuole_size),round(r0/vacuole_size)), angle, 0, 360, (110,110,110), 2
@@ -226,6 +227,7 @@ def create_samples(n_images, n_cells_per_image=100,
                    background_intensity=0.4,
                    background_contrast=0.00188,
                    core_contrast=0.0752,
+                   vac_contrast=1,
                    p_white_outside=1.0,
                    k=1,
                    x0=0,
@@ -358,6 +360,7 @@ def create_samples(n_images, n_cells_per_image=100,
             background_intensity=background_intensity,
             background_contrast=background_contrast,
             core_contrast=core_contrast,
+            vac_contrast=vac_contrast,
             k=k,
             x0=x0
         )
