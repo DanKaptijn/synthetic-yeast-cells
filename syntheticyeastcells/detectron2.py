@@ -59,7 +59,8 @@ def process_batch(destination, set_name, start, end,
                   x0=0,
                   strictness='normal',
                   bud_cells=0,
-                  cell_bud_ratio=4
+                  cell_bud_ratio=4,
+                  include_vacuoles=True
                  ):
     os.makedirs(f'{destination}/{set_name}/', exist_ok=True)
     left = [
@@ -86,7 +87,8 @@ def process_batch(destination, set_name, start, end,
        x0=x0,
        strictness=strictness,
        bud_cells=bud_cells,
-       cell_bud_ratio=cell_bud_ratio)
+       cell_bud_ratio=cell_bud_ratio,
+       include_vacuoles=include_vacuoles)
 
     data = []
     for (i, filename), label, image in zip(left, labels, images):
@@ -115,6 +117,7 @@ def create_dataset(destination,
                    strictness='normal',
                    bud_cells = 0,
                    cell_bud_ratio = 4,
+                   include_vacuoles = True,
                    njobs=40, batch_size=10,
                    progressbar=True):
     kwargs = {
@@ -132,7 +135,8 @@ def create_dataset(destination,
         'x0': x0,
         'strictness': strictness,
         'bud_cells': bud_cells,
-        'cell_bud_ratio': cell_bud_ratio}
+        'cell_bud_ratio': cell_bud_ratio,
+        'include_vacuoles': include_vacuoles}
     progressbar = tqdm if progressbar else (lambda x: x)
 
     results = dict()
