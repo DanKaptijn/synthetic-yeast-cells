@@ -149,6 +149,7 @@ def create_sample(size, cells,
                   vac_contrast=1,
                   k=1,
                   x0=0,
+                  include_vacuoles=True,
                   augmenter=seperate_augmentations,
                   ):
     """Create an image with cells as defined in `cells`"""
@@ -214,7 +215,8 @@ def create_sample(size, cells,
     cells = outer - inner
     cells -= cells.min(); cells /= cells.max()  # scale between 0 and 1
     d -= d.min(); d /= (d.max())*4.5 # scale lower to make edges of vacuoles grey-scale
-    cells = cells + d
+    if include_vacuoles == True:
+        cells = cells + d
     return background + 0.5 * cells - 0.25, cores
 
 
@@ -233,7 +235,8 @@ def create_samples(n_images, n_cells_per_image=100,
                    x0=0,
                    strictness='normal',
                    bud_cells=0,
-                   cell_bud_ratio=4
+                   cell_bud_ratio=4,
+                   include_vacuoles=True
                   ):
     """Creates `n` `sz` x `sz` synthetic images of out of focus cells, 
     with m cells in each one. Then for each of the `n` images, `r` repetitions
@@ -362,7 +365,8 @@ def create_samples(n_images, n_cells_per_image=100,
             core_contrast=core_contrast,
             vac_contrast=vac_contrast,
             k=k,
-            x0=x0
+            x0=x0,
+            include_vacuoles=include_vacuoles
         )
         image[:] = add_pillars(image)
 
